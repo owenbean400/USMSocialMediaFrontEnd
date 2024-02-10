@@ -40,7 +40,7 @@ function LoginPage() {
       if (response.ok) {
         let data = await response.json();
         sessionStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
-        navigate('/main');
+        navigate(process.env.PUBLIC_URL + '/main');
       } else {
         setErrMessage('Login error!');
       }
@@ -56,7 +56,7 @@ function LoginPage() {
         <p>{errMessage}</p>
         <TextFieldExtended labelText="Email Address" labelExtenstion="@maine.edu" onChange={handleEmailChange}/>
         <TextFieldPassword labelText=" Password" onChange={handlePassChange}/>
-        <Link className="login-links" to="/register">Register</Link>
+        <Link className="login-links" to={process.env.PUBLIC_URL + '/register'}>Register</Link>
         <a className="login-links">Reset Password</a>
         <Usmbutton buttonText="Login" onClick={clickOn}/>
       </div>
