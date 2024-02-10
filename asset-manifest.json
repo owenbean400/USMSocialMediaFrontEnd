@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/USMSocialMediaFrontEnd/static/css/main.e8e0c7ea.css",
+    "main.js": "/USMSocialMediaFrontEnd/static/js/main.9bdfec6b.js",
+    "static/js/592.a796a021.chunk.js": "/USMSocialMediaFrontEnd/static/js/592.a796a021.chunk.js",
+    "index.html": "/USMSocialMediaFrontEnd/index.html",
+    "static/media/visible_off.svg": "/USMSocialMediaFrontEnd/static/media/visible_off.4b99fc62db8aee4a9157d765470d737f.svg",
+    "static/media/visible.svg": "/USMSocialMediaFrontEnd/static/media/visible.83b4018a1f8c5cf87f50c740adfde6aa.svg",
+    "main.e8e0c7ea.css.map": "/USMSocialMediaFrontEnd/static/css/main.e8e0c7ea.css.map",
+    "main.9bdfec6b.js.map": "/USMSocialMediaFrontEnd/static/js/main.9bdfec6b.js.map",
+    "592.a796a021.chunk.js.map": "/USMSocialMediaFrontEnd/static/js/592.a796a021.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e8e0c7ea.css",
+    "static/js/main.9bdfec6b.js"
+  ]
+}
