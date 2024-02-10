@@ -48,7 +48,7 @@ function RegisterPage() {
             if (response.ok) {
                 let data = await response.json();
                 sessionStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
-                navigate('/main');
+                navigate(process.env.PUBLIC_URL + '/main');
             } else {
                 setErrMessage('Registration error!');
             }
@@ -66,7 +66,7 @@ function RegisterPage() {
                 <TextFieldPassword labelText="Password" onChange={handlePassChange}/>
                 <TextFieldPassword labelText="Confirm Password" onChange={handleConfirmPassChange}/>
                 <Usmbutton buttonText="Register" onClick={registerAccount}/>
-                <Link className="login-links" to="/">Back</Link>
+                <Link className="login-links" to={process.env.PUBLIC_URL + '/'}>Back</Link>
             </div>
         </div>
     )

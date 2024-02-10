@@ -9,9 +9,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' exact element={<LoginPage/>} />
-        <Route path='/register' exact element={<RegisterPage/>} />
-        <Route path='/main' exact element={<Main/>} />
+        <Route path={process.env.PUBLIC_URL + '/'} exact element={<LoginPage/>} />
+        <Route path={process.env.PUBLIC_URL + '/register'}  exact element={<RegisterPage/>} />
+        <Route path={process.env.PUBLIC_URL + '/main'}  exact element={<Main/>} />
       </Routes>
     </Router>
   );
