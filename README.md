@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# USM Social Media Front End
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is the front end that corresponds with the [back end](https://github.com/myattaw/USMSocialSpring)
 
 ## Available Scripts
 
