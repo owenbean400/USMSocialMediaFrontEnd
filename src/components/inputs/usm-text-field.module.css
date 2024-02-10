@@ -1,0 +1,140 @@
+.textFieldContainer {
+    margin: 12px 0;
+}
+
+.textFieldLabel {
+    color: var(--brand-2);
+    font-family: var(--font-lato);
+    font-size: 18px;
+    width: 200px;
+    margin: 0px;
+}
+
+.textFieldInput {
+    background-color: var(--gray-0);
+    border: none;
+    border: none;
+    color: var(--gray-9);
+    padding: 0 0 0 16px;
+}
+
+.textFieldInputContainer {
+    display: grid;
+}
+
+.textFieldInputContainerPassword {
+    display: grid;
+}
+
+.textFieldInputLeft {
+    background-color: var(--gray-0);
+    border: none;
+    color: var(--gray-9);
+    padding: 0 0 0 16px;
+}
+
+.textFieldInputLeftPassword {
+    background-color: var(--gray-0);
+    border: none;
+    color: var(--gray-9);
+    padding: 0 0 0 16px;
+}
+
+.textFieldDisplayRight {
+    padding: 0 8px 0 16px;
+    background-color: var(--gray-3);
+    color: var(--gray-9);
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+.passwordEye {
+    width: 32px;
+    padding: 0 8px 0 8px;
+    background-color: var(--gray-0);
+    color: var(--gray-9);
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+    .textFieldInput {
+        width: 304px;
+        height: 48px;
+        border-radius: 8px;
+    }
+
+    .textFieldInputContainer {
+        grid-template-columns: 160px 120px;
+    }
+
+    .textFieldInputContainerPassword {
+        grid-template-columns: 232px 54px;
+    }
+
+    .textFieldInputLeft {
+        width: 160px;
+        height: 48px;
+        border-radius: 8px 0 0 8px;
+    }
+
+    .textFieldInputLeftPassword {
+        width: 224px;
+        height: 48px;
+        border-radius: 8px 0 0 8px;
+    }
+
+    .textFieldDisplayRight {
+        width: 96px;
+        height: 48px;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .passwordEye {
+        height: 48px;
+        border-radius: 0 8px 8px 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .textFieldInput {
+        width: 344px;
+        height: 64px;
+        border-radius: 16px;
+    }
+
+    .textFieldInputContainer {
+        grid-template-columns: 200px 120px;
+    }
+
+    .textFieldInputContainerPassword {
+        grid-template-columns: 270px 50px;
+    }
+
+    .textFieldInputLeft {
+        width: 224px;
+        height: 64px;
+        border-radius: 16px 0 0 16px;
+    }
+
+    .textFieldInputLeftPassword {
+        width: 280px;
+        height: 64px;
+        border-radius: 16px 0 0 16px;
+    }
+
+    .textFieldDisplayRight {
+        width: 96px;
+        height: 64px;
+        border-radius: 0 16px 16px 0;
+    }
+
+    .passwordEye {
+        height: 64px;
+        border-radius: 0 16px 16px 0;
+    }
+}
