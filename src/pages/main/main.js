@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 function Main() {
     const [token, setToken] = useState('');
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     useEffect(() => {
         const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
         if (tokenFromStorage) {
             setToken(tokenFromStorage);
         } else {
-            navigate('/');
+            navigate(process.env.PUBLIC_URL + '/');
         }
     }, []);
 
