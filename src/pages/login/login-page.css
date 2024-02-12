@@ -23,6 +23,16 @@
     cursor: pointer;
 }
 
+.login-display-text {
+    color: var(--brand-2);
+    font-family: var(--font-lato);
+    font-size: 18px;
+    text-align: center;
+    margin: 0px;
+    display: block;
+    text-decoration: none;
+}
+
 .login-links:hover {
     text-decoration: underline;
 }

@@ -1,32 +1,24 @@
 import './login-page.css';
 import React, { useState } from 'react';
-import TextFieldPassword from '../../components/inputs/usm-text-field-password';
 import TextFieldExtended from '../../components/inputs/usm-text-field-extended';
 import Usmbutton from '../../components/button/usm-button';
 import ConnectConfig from '../../config/connections.json';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function LoginPage() {
+function PasswordReset() {
   const [emailaddrInput, setEmailInput] = useState('');
-  const [passInput, setPassInput] = useState('');
   const [errMessage, setErrMessage] = useState('');
   const [displayMessage, setdisplayMessage] = useState('');
-  const navigate = useNavigate()
 
   function handleEmailChange(value) {
     setEmailInput(value);
   };
 
-  function handlePassChange(value) {
-    setPassInput(value);
-  };
-
   async function clickOn() {
-    const URL = ConnectConfig.api_server.url + "/api/v1/auth/authenticate"
+    const URL = ConnectConfig.api_server.url + "/api/v1/reset_password"
 
     let credentials = {
       email: emailaddrInput + "@maine.edu",
-      password: passInput
     }
 
     try {
@@ -40,13 +32,12 @@ function LoginPage() {
 
       if (response.ok) {
         let data = await response.json();
-        sessionStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
-        navigate(process.env.PUBLIC_URL + '/main');
+        setdisplayMessage(data);
       } else {
-        setErrMessage('Login error!');
+        setErrMessage('Password reset error!');
       }
     } catch (error) {
-      setErrMessage('Login error!');
+      setErrMessage('Password reset error!');
     }
   }
 
@@ -55,14 +46,15 @@ function LoginPage() {
       <div className="login-container">
         <img className="usm-logo-top" src="https://imgs.search.brave.com/EPO1Pfw_I9IxOnuFLTFMf_y9eR2TpuWsZ_5t7ADh1Qg/rs:fit:860:0:0/g:ce/aHR0cHM6Ly91c20u/bWFpbmUuZWR1L3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDIyLzA3/L1VTTV9oZWFkZXJM/b2dvLnBuZw"></img>
         <p>{(errMessage !== "") ? errMessage : displayMessage}</p>
-        <TextFieldExtended labelText="Email Address" labelExtenstion="@maine.edu" onChange={handleEmailChange}/>
-        <TextFieldPassword labelText=" Password" onChange={handlePassChange}/>
-        <Link className="login-links" to={process.env.PUBLIC_URL + '/register'}>Register</Link>
-        <Link className="login-links" to={process.env.PUBLIC_URL + '/passwordreset'}>Reset Password</Link>
-        <Usmbutton buttonText="Login" onClick={clickOn}/>
+        {(displayMessage == "") ?
+        <div>
+            <TextFieldExtended labelText="Email Address" labelExtenstion="@maine.edu" onChange={handleEmailChange}/>
+            <Usmbutton buttonText="Send Reset Password" onClick={clickOn}/> 
+        </div> : <div></div>}
+        <Link className="login-links" to={process.env.PUBLIC_URL + '/'}>Back</Link>
       </div>
     </div>
   );
 }
 
-export default LoginPage;
+export default PasswordReset;
