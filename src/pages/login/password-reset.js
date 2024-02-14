@@ -51,7 +51,7 @@ function PasswordReset() {
             <TextFieldExtended labelText="Email Address" labelExtenstion="@maine.edu" onChange={handleEmailChange}/>
             <Usmbutton buttonText="Send Reset Password" onClick={clickOn}/> 
         </div> : <div></div>}
-        <Link className="login-links" to={process.env.PUBLIC_URL + '/'}>Back</Link>
+        <Link className="login-links" to={'/'}>Back</Link>
       </div>
     </div>
   );

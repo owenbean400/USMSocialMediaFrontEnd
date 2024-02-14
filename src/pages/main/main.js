@@ -11,7 +11,7 @@ function Main() {
         if (tokenFromStorage) {
             setToken(tokenFromStorage);
         } else {
-            navigate(process.env.PUBLIC_URL + '/');
+            navigate('/');
         }
     }, []);
 

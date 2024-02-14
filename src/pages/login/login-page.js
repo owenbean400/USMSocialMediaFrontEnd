@@ -41,7 +41,7 @@ function LoginPage() {
       if (response.ok) {
         let data = await response.json();
         sessionStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
-        navigate(process.env.PUBLIC_URL + '/main');
+        navigate('/main');
       } else {
         setErrMessage('Login error!');
       }
@@ -57,8 +57,8 @@ function LoginPage() {
         <p>{(errMessage !== "") ? errMessage : displayMessage}</p>
         <TextFieldExtended labelText="Email Address" labelExtenstion="@maine.edu" onChange={handleEmailChange}/>
         <TextFieldPassword labelText=" Password" onChange={handlePassChange}/>
-        <Link className="login-links" to={process.env.PUBLIC_URL + '/register'}>Register</Link>
-        <Link className="login-links" to={process.env.PUBLIC_URL + '/passwordreset'}>Reset Password</Link>
+        <Link className="login-links" to={'/register'}>Register</Link>
+        <Link className="login-links" to={'/passwordreset'}>Reset Password</Link>
         <Usmbutton buttonText="Login" onClick={clickOn}/>
       </div>
     </div>
