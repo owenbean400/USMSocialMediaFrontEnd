@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/mainecollege.tech/static/css/main.0eb86adc.css",
-    "main.js": "/mainecollege.tech/static/js/main.ca6f88ac.js",
-    "static/js/592.a796a021.chunk.js": "/mainecollege.tech/static/js/592.a796a021.chunk.js",
-    "index.html": "/mainecollege.tech/index.html",
-    "static/media/visible_off.svg": "/mainecollege.tech/static/media/visible_off.4b99fc62db8aee4a9157d765470d737f.svg",
-    "static/media/visible.svg": "/mainecollege.tech/static/media/visible.83b4018a1f8c5cf87f50c740adfde6aa.svg",
-    "main.0eb86adc.css.map": "/mainecollege.tech/static/css/main.0eb86adc.css.map",
-    "main.ca6f88ac.js.map": "/mainecollege.tech/static/js/main.ca6f88ac.js.map",
-    "592.a796a021.chunk.js.map": "/mainecollege.tech/static/js/592.a796a021.chunk.js.map"
+    "main.css": "./static/css/main.0eb86adc.css",
+    "main.js": "./static/js/main.81a05544.js",
+    "static/js/592.a796a021.chunk.js": "./static/js/592.a796a021.chunk.js",
+    "index.html": "./index.html",
+    "static/media/visible_off.svg": "./static/media/visible_off.4b99fc62db8aee4a9157d765470d737f.svg",
+    "static/media/visible.svg": "./static/media/visible.83b4018a1f8c5cf87f50c740adfde6aa.svg",
+    "main.0eb86adc.css.map": "./static/css/main.0eb86adc.css.map",
+    "main.81a05544.js.map": "./static/js/main.81a05544.js.map",
+    "592.a796a021.chunk.js.map": "./static/js/592.a796a021.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0eb86adc.css",
-    "static/js/main.ca6f88ac.js"
+    "static/js/main.81a05544.js"
   ]
 }
