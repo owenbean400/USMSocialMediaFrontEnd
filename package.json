@@ -2,7 +2,7 @@
   "name": "usm-social-media-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "mainecollege.tech",
+  "homepage": ".",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
