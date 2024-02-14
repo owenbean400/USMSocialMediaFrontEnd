@@ -32,7 +32,9 @@ function VerificationAcceptance() {
             }
         }
 
-        verify();
+        if (!verified) {
+            verify();
+        }
 
     }, []);
 
@@ -46,11 +48,11 @@ function VerificationAcceptance() {
                     (verified) ? 
                         <div>
                             <p className="login-display-text">Account Verified</p>
-                            <Link className="login-links" to={process.env.PUBLIC_URL + '/'}>Login</Link>
+                            <Link className="login-links" to={'/'}>Login</Link>
                         </div> : 
                         <div>
                             <p className="login-display-text">Error with Verification</p>
-                            <Link className="login-links" to={process.env.PUBLIC_URL + '/'}>Login</Link>
+                            <Link className="login-links" to={'/'}>Login</Link>
                         </div>}
             </div>
         </div>

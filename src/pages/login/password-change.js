@@ -44,7 +44,7 @@ function PasswordChange() {
             });
       
             if (response.ok) {
-                navigate(process.env.PUBLIC_URL + '/');
+                navigate('/');
             } else {
                 setErrMessage('Reset password error!');
             }
@@ -62,7 +62,7 @@ function PasswordChange() {
                 <TextFieldPassword labelText="Password" onChange={handlePassChange}/>
                 <TextFieldPassword labelText="Confirm Password" onChange={handleConfirmPassChange}/>
                 <Usmbutton buttonText="Reset Password" onClick={registerAccount}/>
-                <Link className="login-links" to={process.env.PUBLIC_URL + '/'}>Back</Link>
+                <Link className="login-links" to={'/'}>Back</Link>
             </div>
         </div>
     )

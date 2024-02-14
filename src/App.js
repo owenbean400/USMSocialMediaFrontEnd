@@ -14,13 +14,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path={process.env.PUBLIC_URL + '/'} exact element={<LoginPage/>} />
-        <Route path={process.env.PUBLIC_URL + '/register'}  exact element={<RegisterPage/>} />
-        <Route path={process.env.PUBLIC_URL + '/verify/awaiting'} exact element={<VerifyAwaiting/>} />
-        <Route path={process.env.PUBLIC_URL + '/verify'} exact element={<VerificationAcceptance/>} />
-        <Route path={process.env.PUBLIC_URL + '/passwordreset'}  exact element={<PasswordReset/>} />
-        <Route path={process.env.PUBLIC_URL + '/passwordchange'}  exact element={<PasswordChange/>} />
-        <Route path={process.env.PUBLIC_URL + '/main'}  exact element={<Main/>} />
+        <Route path={'/'} exact element={<LoginPage/>} />
+        <Route path={'/register'}  exact element={<RegisterPage/>} />
+        <Route path={'/verify/awaiting'} exact element={<VerifyAwaiting/>} />
+        <Route path={'/verify'} exact element={<VerificationAcceptance/>} />
+        <Route path={'/passwordreset'}  exact element={<PasswordReset/>} />
+        <Route path={'/passwordchange'}  exact element={<PasswordChange/>} />
+        <Route path={'/main'}  exact element={<Main/>} />
       </Routes>
     </Router>
   );

@@ -12,7 +12,7 @@ function VerifyAwaiting() {
         if (tokenFromStorage) {
             setToken(tokenFromStorage);
         } else {
-            navigate(process.env.PUBLIC_URL + '/');
+            navigate('/');
         }
 
         async function checkVerified() {
@@ -31,13 +31,13 @@ function VerifyAwaiting() {
                     let data = await response.json();
 
                     if (data.verified) {
-                        navigate(process.env.PUBLIC_URL + '/main');
+                        navigate('/main');
                     }
                 } else {
-                    navigate(process.env.PUBLIC_URL + '/');
+                    // navigate('/');
                 }
             } catch (error) {
-                navigate(process.env.PUBLIC_URL + '/')
+                // navigate('/')
             }
         }
 
@@ -53,7 +53,7 @@ function VerifyAwaiting() {
             <div className="login-container">
                 <p className="login-display-text">Awaiting Verification</p>
                 <p className="login-display-text">Please check your email</p>
-                <Link className="login-links" to={process.env.PUBLIC_URL + '/'}>Back to login</Link>
+                <Link className="login-links" to={'/'}>Back to login</Link>
             </div>
         </div>
     )
