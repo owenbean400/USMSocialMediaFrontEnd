@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/USMSocialMediaFrontEnd/static/css/main.0eb86adc.css",
-    "main.js": "/USMSocialMediaFrontEnd/static/js/main.0d879ffb.js",
-    "static/js/592.a796a021.chunk.js": "/USMSocialMediaFrontEnd/static/js/592.a796a021.chunk.js",
-    "index.html": "/USMSocialMediaFrontEnd/index.html",
-    "static/media/visible_off.svg": "/USMSocialMediaFrontEnd/static/media/visible_off.4b99fc62db8aee4a9157d765470d737f.svg",
-    "static/media/visible.svg": "/USMSocialMediaFrontEnd/static/media/visible.83b4018a1f8c5cf87f50c740adfde6aa.svg",
-    "main.0eb86adc.css.map": "/USMSocialMediaFrontEnd/static/css/main.0eb86adc.css.map",
-    "main.0d879ffb.js.map": "/USMSocialMediaFrontEnd/static/js/main.0d879ffb.js.map",
-    "592.a796a021.chunk.js.map": "/USMSocialMediaFrontEnd/static/js/592.a796a021.chunk.js.map"
+    "main.css": "/mainecollege.tech/static/css/main.0eb86adc.css",
+    "main.js": "/mainecollege.tech/static/js/main.ca6f88ac.js",
+    "static/js/592.a796a021.chunk.js": "/mainecollege.tech/static/js/592.a796a021.chunk.js",
+    "index.html": "/mainecollege.tech/index.html",
+    "static/media/visible_off.svg": "/mainecollege.tech/static/media/visible_off.4b99fc62db8aee4a9157d765470d737f.svg",
+    "static/media/visible.svg": "/mainecollege.tech/static/media/visible.83b4018a1f8c5cf87f50c740adfde6aa.svg",
+    "main.0eb86adc.css.map": "/mainecollege.tech/static/css/main.0eb86adc.css.map",
+    "main.ca6f88ac.js.map": "/mainecollege.tech/static/js/main.ca6f88ac.js.map",
+    "592.a796a021.chunk.js.map": "/mainecollege.tech/static/js/592.a796a021.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0eb86adc.css",
-    "static/js/main.0d879ffb.js"
+    "static/js/main.ca6f88ac.js"
   ]
 }
