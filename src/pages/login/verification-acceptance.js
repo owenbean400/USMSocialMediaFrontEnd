@@ -43,15 +43,15 @@ function VerificationAcceptance() {
             <div className="login-container">
                 {(busyVerify) ? 
                     <div>
-                        <p className="login-display-text">Awaiting Verification Acceptance</p>
+                        <p className="login-header-text">Awaiting Verification Acceptance</p>
                     </div> : 
                     (verified) ? 
                         <div>
-                            <p className="login-display-text">Account Verified</p>
+                            <p className="login-header-text">Account Verified</p>
                             <Link className="login-links" to={'/'}>Login</Link>
                         </div> : 
                         <div>
-                            <p className="login-display-text">Error with Verification</p>
+                            <p className="login-header-text">Error with Verification</p>
                             <Link className="login-links" to={'/'}>Login</Link>
                         </div>}
             </div>
