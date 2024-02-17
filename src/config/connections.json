@@ -2,5 +2,8 @@
     "api_server": {
         "url": "http://localhost:8080",
         "session_token_id_name": "token"
+    },
+    "google": {
+        "client_id": "253025360694-jsegupeqmgj4ahs2fj6bli2ffd2h5i3t.apps.googleusercontent.com"
     }
 }
