@@ -7,6 +7,7 @@ import ConnectConfig from '../../config/connections.json';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../../redux/actions';
+import { GoogleLogin } from '@leecheuk/react-google-login';
 
 function LoginPage() {
   const [emailaddrInput, setEmailInput] = useState('');
@@ -88,6 +89,16 @@ function LoginPage() {
     }
   }
 
+  function googleSuccess(response) {
+    console.log("success");
+    console.log(response);
+  }
+
+  function googleFailure(response) {
+    console.log("fail");
+    console.log(response);
+  }
+
   return (
     <div className="login-page">
       <div className="login-container">
@@ -98,6 +109,14 @@ function LoginPage() {
         <Link className="login-links" to={'/register'}>Register</Link>
         <Link className="login-links" to={'/passwordreset'}>Reset Password</Link>
         <Usmbutton buttonText="Login" onClick={clickOn}/>
+        <GoogleLogin 
+          clientId={ConnectConfig.google.client_id}
+          buttonText="Login with Google"
+          onSuccess={googleSuccess}
+          onFailure={googleFailure}
+          cookiePolicy={'single_host_origin'}
+          className="google-client-button"
+        />
       </div>
     </div>
   );
