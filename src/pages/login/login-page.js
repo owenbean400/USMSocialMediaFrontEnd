@@ -1,10 +1,12 @@
 import './login-page.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextFieldPassword from '../../components/inputs/usm-text-field-password';
 import TextFieldExtended from '../../components/inputs/usm-text-field-extended';
 import Usmbutton from '../../components/button/usm-button';
 import ConnectConfig from '../../config/connections.json';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addPost } from '../../redux/actions';
 
 function LoginPage() {
   const [emailaddrInput, setEmailInput] = useState('');
@@ -12,6 +14,42 @@ function LoginPage() {
   const [errMessage, setErrMessage] = useState('');
   const [displayMessage, setdisplayMessage] = useState('');
   const navigate = useNavigate()
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+
+    async function getPosts(token_input) {
+        const URL = ConnectConfig.api_server.url + "/api/v1/post/recommended";
+
+        try {
+            const response = await fetch(URL, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token_input}`,
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.ok) {
+                let data = await response.json();
+
+                dispatch(addPost(data.content));
+
+                navigate('/main');
+            } else {
+              sessionStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
+            }
+        } catch (error) {
+          sessionStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
+        }
+    }
+
+
+    if (tokenFromStorage) {
+      getPosts(tokenFromStorage);
+    }
+  }, []);
 
   function handleEmailChange(value) {
     setEmailInput(value);

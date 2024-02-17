@@ -8,21 +8,25 @@ import Main from './pages/main/main';
 import Decoy from './pages/decoy';
 import VerifyAwaiting from './pages/login/verification-awaiting';
 import VerificationAcceptance from './pages/login/verification-acceptance';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 function App() {
 
   return (
-    <Router>
-      <Routes>
-        <Route path={'/'} exact element={<LoginPage/>} />
-        <Route path={'/register'}  exact element={<RegisterPage/>} />
-        <Route path={'/verify/awaiting'} exact element={<VerifyAwaiting/>} />
-        <Route path={'/verify'} exact element={<VerificationAcceptance/>} />
-        <Route path={'/passwordreset'}  exact element={<PasswordReset/>} />
-        <Route path={'/passwordchange'}  exact element={<PasswordChange/>} />
-        <Route path={'/main'}  exact element={<Main/>} />
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path={'/'} exact element={<LoginPage/>} />
+          <Route path={'/register'}  exact element={<RegisterPage/>} />
+          <Route path={'/verify/awaiting'} exact element={<VerifyAwaiting/>} />
+          <Route path={'/verify'} exact element={<VerificationAcceptance/>} />
+          <Route path={'/passwordreset'}  exact element={<PasswordReset/>} />
+          <Route path={'/passwordchange'}  exact element={<PasswordChange/>} />
+          <Route path={'/main'}  exact element={<Main/>} />
+        </Routes>
+      </Router>
+    </Provider>
   );
 }
 
