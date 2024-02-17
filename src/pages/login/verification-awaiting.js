@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ConnectConfig from '../../config/connections.json';
+import { addPost } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
 
 
 function VerifyAwaiting() {
     const [token, setToken] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
@@ -15,35 +18,34 @@ function VerifyAwaiting() {
             navigate('/');
         }
 
-        async function checkVerified() {
-            const URL = ConnectConfig.api_server.url + "/api/v1/verifyawait";
+        async function getPostsAsVerified() {
+            const URL = ConnectConfig.api_server.url + "/api/v1/post/recommended";
 
             try {
                 const response = await fetch(URL, {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${token}`,
+                        'Authorization': `Bearer ${tokenFromStorage}`,
                         'Content-Type': 'application/json',
                     }
                 });
 
                 if (response.ok) {
                     let data = await response.json();
+                    console.log(data);
 
-                    if (data.verified) {
-                        navigate('/main');
-                    }
+                    dispatch(addPost(data.content));
+
+                    navigate('/main');
                 } else {
-                    // navigate('/');
                 }
             } catch (error) {
-                // navigate('/')
             }
         }
 
-        checkVerified();
+        getPostsAsVerified();
 
-        const intervalId = setInterval(checkVerified, 30000);
+        const intervalId = setInterval(getPostsAsVerified, 30000);
 
         return () => clearInterval(intervalId);
     }, []);
