@@ -23,6 +23,10 @@
     cursor: pointer;
 }
 
+.login-links:hover {
+    text-decoration: underline;
+}
+
 .login-display-text {
     color: var(--brand-2);
     font-family: var(--font-lato);
@@ -33,17 +37,58 @@
     text-decoration: none;
 }
 
-.login-links:hover {
-    text-decoration: underline;
+.login-header-text {
+    color: var(--brand-2);
+    font-family: var(--font-lato);
+    text-align: center;
+    display: block;
+    text-decoration: none;
 }
 
 input[type="text"], input[type="password"], textarea, select { 
     outline: none;
 }
 
+.bounce-container {
+    position: relative;
+    display: flex;
+    font-family: var(--font-lato);
+    color: var(--brand-2);
+    font-weight: bold;
+    margin-bottom: 32px;
+}
+
+.click-link-button {
+    color: var(--brand-2);
+    font-family: var(--font-lato);
+    font-size: 18px;
+    text-align: center;
+    margin: 0px;
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.click-link-button:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 768px) {
     .usm-logo-top {
         width: 220px;
+    }
+
+    .bounce-container {
+        font-size: 24px;
+    }
+
+    .login-header-text {
+        font-size: 24px;
+        margin: 0px 0px 8px 0px;
+    }
+
+    .bounchSpace {
+        width: 16px;
     }
 }
 
@@ -51,4 +96,107 @@ input[type="text"], input[type="password"], textarea, select {
     .usm-logo-top {
         width: 380px;
     }
+
+    .bounce-container {
+        font-size: 48px;
+    }
+
+    .login-header-text {
+        font-size: 32px;
+        margin: 0px 0px 12px 0px;
+    }
+
+    .bounchSpace {
+        width: 32px;
+    }
+}
+
+@keyframes bounce {
+    0%   { transform: scale(1,1) translateY(0); }
+    5%  { transform: scale(1.1,.9) translateY(0); }
+    15%  { transform: scale(.9,1.1)   translateY(-55px);}
+    25%  { transform: scale(1.05,.95) translateY(0); }
+    29%  { transform: scale(1,1) translateY(-7px); }
+    33%  { transform: scale(1,1) translateY(0);}
+    100% { transform: scale(1,1) translateY(0);}
+}
+
+.bounce-1 {
+    animation: bounce 4.5s ease infinite;
+}
+
+.bounce-2 {
+    animation: bounce 4.5s ease infinite .1s;
+}
+
+.bounce-3 {
+    animation: bounce 4.5s ease infinite .2s;
+}
+
+.bounce-4 {
+    animation: bounce 4.5s ease infinite .3s;
+}
+
+.bounce-5 {
+    animation: bounce 4.5s ease infinite .4s;
+}
+
+.bounce-6 {
+    animation: bounce 4.5s ease infinite .5s;
+}
+
+.bounce-7 {
+    animation: bounce 4.5s ease infinite .6s;
+}
+
+.bounce-8 {
+    animation: bounce 4.5s ease infinite .7s;
+}
+
+.bounce-9 {
+    animation: bounce 4.5s ease infinite .9s;
+}
+
+.bounce-10 {
+    animation: bounce 4.5s ease infinite 1s;
+}
+
+.bounce-11 {
+    animation: bounce 4.5s ease infinite 1.1s;
+}
+
+.bounce-12 {
+    animation: bounce 4.5s ease infinite 1.2s;
+}
+
+.bounce-13 {
+    animation: bounce 4.5s ease infinite 1.3s;
+}
+
+.bounce-14 {
+    animation: bounce 4.5s ease infinite 1.4s;
+}
+
+.bounce-15 {
+    animation: bounce 4.5s ease infinite 1.5s;
+}
+
+.bounce-16 {
+    animation: bounce 4.5s ease infinite 1.6s;
+}
+
+.bounce-17 {
+    animation: bounce 4.5s ease infinite 1.7s;
+}
+
+.bounce-18 {
+    animation: bounce 4.5s ease infinite 1.8s;
+}
+
+.bounce-19 {
+    animation: bounce 4.5s ease infinite 1.9s;
+}
+
+.bounce-20 {
+    animation: bounce 4.5s ease infinite 2s;
 }
