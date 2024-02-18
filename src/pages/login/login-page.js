@@ -18,6 +18,8 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.hash.substring(1));
+    const googleToken = queryParams.get('id_token')
     const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
 
     async function getPosts(token_input) {
@@ -46,9 +48,12 @@ function LoginPage() {
         }
     }
 
-
     if (tokenFromStorage) {
       getPosts(tokenFromStorage);
+    }
+
+    if (googleToken) {
+      googleLoginAPI(googleToken);
     }
   }, []);
 
@@ -89,14 +94,38 @@ function LoginPage() {
     }
   }
 
+  async function googleLoginAPI(token) {
+    const URL = ConnectConfig.api_server.url + "/api/v1/auth/googleauthenticate"
+
+    let googlePost = {
+      token: token
+    }
+
+    try {
+      const response = await fetch(URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(googlePost)
+      });
+
+      if (response.ok) {
+        let data = await response.json();
+        sessionStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
+        navigate('/main');
+      } else {
+        setErrMessage('Google login error!');
+      }
+    } catch (error) {
+      setErrMessage('Google login error!');
+    }
+  }
+
   function googleSuccess(response) {
-    console.log("success");
-    console.log(response);
   }
 
   function googleFailure(response) {
-    console.log("fail");
-    console.log(response);
   }
 
   return (
@@ -116,6 +145,8 @@ function LoginPage() {
           onFailure={googleFailure}
           cookiePolicy={'single_host_origin'}
           className="google-client-button"
+          isSignedIn={true}
+          uxMode="redirect"
         />
       </div>
     </div>
