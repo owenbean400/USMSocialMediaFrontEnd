@@ -62,7 +62,7 @@ function RegisterPage() {
         <div className="login-page">
           <div className="login-container">
                 <img className="usm-logo-top" src="https://imgs.search.brave.com/EPO1Pfw_I9IxOnuFLTFMf_y9eR2TpuWsZ_5t7ADh1Qg/rs:fit:860:0:0/g:ce/aHR0cHM6Ly91c20u/bWFpbmUuZWR1L3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDIyLzA3/L1VTTV9oZWFkZXJM/b2dvLnBuZw" width="380px"></img>
-                <p>{errMessage}</p>
+                <p className="login-error-text">{errMessage}</p>
                 <TextFieldExtended labelText="Email Address" labelExtenstion="@maine.edu" onChange={handleEmailChange}/>
                 <TextFieldPassword labelText="Password" onChange={handlePassChange}/>
                 <TextFieldPassword labelText="Confirm Password" onChange={handleConfirmPassChange}/>

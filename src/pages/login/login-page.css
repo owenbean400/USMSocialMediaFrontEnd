@@ -37,6 +37,16 @@
     text-decoration: none;
 }
 
+.login-error-text {
+    color: red;
+    font-family: var(--font-lato);
+    font-size: 18px;
+    text-align: center;
+    margin: 0px;
+    display: block;
+    text-decoration: none;
+}
+
 .login-header-text {
     color: var(--brand-2);
     font-family: var(--font-lato);
