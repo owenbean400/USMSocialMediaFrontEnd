@@ -45,7 +45,7 @@ function PasswordReset() {
     <div className="login-page">
       <div className="login-container">
         <img className="usm-logo-top" src="https://imgs.search.brave.com/EPO1Pfw_I9IxOnuFLTFMf_y9eR2TpuWsZ_5t7ADh1Qg/rs:fit:860:0:0/g:ce/aHR0cHM6Ly91c20u/bWFpbmUuZWR1L3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDIyLzA3/L1VTTV9oZWFkZXJM/b2dvLnBuZw"></img>
-        <p>{(errMessage !== "") ? errMessage : displayMessage}</p>
+        <p className={(errMessage !== "") ? "login-error-text" : "login-display-text"}>{(errMessage !== "") ? errMessage : displayMessage}</p>
         {(displayMessage == "") ?
         <div>
             <TextFieldExtended labelText="Email Address" labelExtenstion="@maine.edu" onChange={handleEmailChange}/>
