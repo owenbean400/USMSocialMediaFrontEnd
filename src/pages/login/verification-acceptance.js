@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ConnectConfig from '../../config/connections.json';
 
 function VerificationAcceptance() {
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const verificationToken = queryParams.get('token');
+    let { verificationToken } = useParams();
     const [busyVerify, setBusyVerify] = useState(true);
     const [verified, setVerified] = useState(false);
 
@@ -36,7 +34,7 @@ function VerificationAcceptance() {
             verify();
         }
 
-    }, []);
+    }, [verificationToken, verified]);
 
     return (
         <div className="login-page">
