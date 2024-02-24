@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import TextFieldPassword from '../../components/inputs/usm-text-field-password';
 import Usmbutton from '../../components/button/usm-button';
 import ConnectConfig from '../../config/connections.json';
 
 function PasswordChange() {
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const resetToken = queryParams.get('token');
-    const emailAddress = queryParams.get('email');
+    let { emailAddress, resetToken } = useParams();
     const [passInput, setPassInput] = useState('');
     const [confirmPassInput, setConfirmPassInput] = useState('');
     const [errMessage, setErrMessage] = useState('');

@@ -20,9 +20,9 @@ function App() {
           <Route path={'/'} exact element={<LoginPage/>} />
           <Route path={'/register'}  exact element={<RegisterPage/>} />
           <Route path={'/verify/awaiting'} exact element={<VerifyAwaiting/>} />
-          <Route path={'/verify'} exact element={<VerificationAcceptance/>} />
+          <Route path={'/verify/:verificationToken'} exact element={<VerificationAcceptance/>} />
           <Route path={'/passwordreset'}  exact element={<PasswordReset/>} />
-          <Route path={'/passwordchange'}  exact element={<PasswordChange/>} />
+          <Route path={'/passwordchange/:emailAddr/:resetToken'}  exact element={<PasswordChange/>} />
           <Route path={'/main'}  exact element={<Main/>} />
         </Routes>
       </Router>
