@@ -1,6 +1,6 @@
 {
     "api_server": {
-        "url": "http://api.mainecollege.tech",
+        "url": "https://api.mainecollege.tech",
         "session_token_id_name": "token"
     },
     "google": {
