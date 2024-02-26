@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ConnectConfig from '../../config/connections.json';
 import { addPost } from '../../redux/actions';
@@ -10,9 +10,9 @@ function VerifyAwaiting() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    async function getPostsAsVerified(token_id) {
+    const getPostsAsVerified = useCallback(async (token_id) => {
         const URL = ConnectConfig.api_server.url + "/api/v1/post/recommended";
-
+    
         try {
             const response = await fetch(URL, {
                 method: 'GET',
@@ -21,19 +21,19 @@ function VerifyAwaiting() {
                     'Content-Type': 'application/json',
                 }
             });
-
+    
             if (response.ok) {
                 let data = await response.json();
                 console.log(data);
-
+    
                 dispatch(addPost(data.content));
-
+    
                 navigate('/main');
             } else {
             }
         } catch (error) {
         }
-    }
+    }, [dispatch, navigate]); 
 
     useEffect(() => {
         const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
