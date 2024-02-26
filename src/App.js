@@ -5,7 +5,6 @@ import RegisterPage from './pages/login/register-user';
 import PasswordChange from './pages/login/password-change';
 import PasswordReset from './pages/login/password-reset';
 import Main from './pages/main/main';
-import Decoy from './pages/decoy';
 import VerifyAwaiting from './pages/login/verification-awaiting';
 import VerificationAcceptance from './pages/login/verification-acceptance';
 import { Provider } from 'react-redux';

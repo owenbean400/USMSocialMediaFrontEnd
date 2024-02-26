@@ -43,11 +43,11 @@ function Main() {
         }
 
 
-        if (posts.length == 0) {
+        if (posts.length === 0) {
             getPosts(tokenFromStorage);
         }
 
-    }, []);
+    }, [dispatch, navigate, posts.length]);
 
     return(
         <div>

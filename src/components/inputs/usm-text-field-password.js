@@ -21,7 +21,7 @@ export default function TextFieldPassword(props) {
                     onChange={(e) => props.onChange(e.target.value)}
                     maxlength={props.maxLength || 48}/>
                 <div className={styles.passwordEye} onClick={(e) => toggleShowPass()}>
-                    <img src={showPass ? VisibleIconOn : VisibleIconOff}></img>
+                    <img src={showPass ? VisibleIconOn : VisibleIconOff} alt="Eyeball"></img>
                 </div>
             </div>
         </div>

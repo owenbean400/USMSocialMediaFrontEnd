@@ -48,7 +48,7 @@ function VerifyAwaiting() {
         const intervalId = setInterval(() => getPostsAsVerified(tokenFromStorage), 30000);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [getPostsAsVerified]);
 
     return (
         <div className="login-page">
