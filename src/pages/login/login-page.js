@@ -82,7 +82,7 @@ function LoginPage() {
     if (googleToken) {
       googleLoginAPI(googleToken);
     }
-  }, [dispatch, googleLoginAPI, navigate]);
+  }, [dispatch, navigate]);
 
   function handleEmailChange(value) {
     setEmailInput(value);
