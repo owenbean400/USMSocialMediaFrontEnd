@@ -3,6 +3,8 @@ import ConnectConfig from '../../config/connections.json';
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { addPost } from '../../redux/actions';
+import Post from "../../components/posts/post";
+import PostTests from '../../components/posts/posts_test.json';
 
 function Main() {
     const [token, setToken] = useState('');
@@ -54,8 +56,15 @@ function Main() {
             <h1>Token</h1>
             <p>{token}</p>
             <h2>Posts</h2>
-            {posts.map((post, index) => (
-                <p key={index}>{post}</p>
+            {PostTests.posts.map((post, index) => (
+                <Post
+                    key={index}
+                    name={post.name}
+                    title={post.title}
+                    content={post.content}
+                    likes={post.likes}
+                    comments={post.comments}
+                ></Post>
             ))}
         </div>
     )
