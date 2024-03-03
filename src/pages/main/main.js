@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { addPost } from '../../redux/actions';
 import Post from "../../components/posts/post";
-import PostTests from '../../components/posts/posts_test.json';
 import SideSection from "../../components/sideMenu/sideSection";
 import styles from "./main.module.css";
 import NavBar from "../../components/nav/navbar";
@@ -13,7 +12,10 @@ function Main() {
     const [token, setToken] = useState('');
     const navigate = useNavigate();
     const posts = useSelector(state => state.posts);
+    const [content, setContent] = useState('');
     const dispatch = useDispatch();
+
+    console.log(posts);
 
     useEffect(() => {
         const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
@@ -38,7 +40,7 @@ function Main() {
                 if (response.ok) {
                     let data = await response.json();
 
-                    dispatch(addPost(data.content));
+                    dispatch(addPost(data.body));
 
                     navigate('/main');
                 } else {
@@ -54,6 +56,41 @@ function Main() {
 
     }, [dispatch, navigate, posts.length]);
 
+    async function createPost() {
+        const URL = ConnectConfig.api_server.url + "/api/v1/post/create";
+
+        try {
+            let post = {
+                content: content
+            }
+
+            const response = await fetch(URL, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(post)
+            });
+
+            if (response.ok) {
+                let data = await response.json();
+
+                console.log(data);
+
+                setContent('');
+            } else {
+                console.log("Status not ok");
+
+                let data = await response.json();
+
+                console.log(data);
+            }
+        } catch (error) {
+            console.log("Error")
+        }
+    }
+
     return(
         <div>
             <NavBar />
@@ -63,46 +100,29 @@ function Main() {
                         <div className={styles.sidemenuInside}>
                             <SideSection 
                                 header="Groups"
-                                items={[
-                                    {
-                                        to: "/",
-                                        title: "USM Esports"
-                                    },
-                                    {
-                                        to: "/",
-                                        title: "USM Track"
-                                    },
-                                ]}
+                                items={[]}
                             />
                             <SideSection 
                                 header="Classes"
-                                items={[
-                                    {
-                                        to: "/",
-                                        title: "COS 420 Spring 2024"
-                                    },
-                                    {
-                                        to: "/",
-                                        title: "ITA 120 Spring 2024"
-                                    },
-                                ]}
+                                items={[]}
                             />
                         </div>
                     </div>
                     <div className={styles.postsContainer}>
                         <div className={styles.newPostContainer}>
                             <div className={styles.newPostImage}></div>
-                            <input className={styles.newPostTextFieldInput} type="text" />
-                            <p>Post</p>
+                            <input className={styles.newPostTextFieldInput} type="text" onChange={(e) => setContent(e.target.value)} value={content}/>
+                            <p onClick={() => createPost()}>Post</p>
                         </div>
-                        {PostTests.posts.map((post, index) => (
+                        {posts[0] && posts[0].content.map((post, index) => (
                             <Post
                                 key={index}
-                                name={post.name}
+                                id={post.id}
+                                name={post.postersFirstName + " " + post.postersLastName}
                                 title={post.title}
                                 content={post.content}
-                                likes={post.likes}
-                                comments={post.comments}
+                                likes={post.likeCount}
+                                comments={post.comments || []}
                             ></Post>
                         ))}
                         <div className={styles.morePostContainer}>
