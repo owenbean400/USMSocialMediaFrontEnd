@@ -1,5 +1,5 @@
 .container {
-    background-color: lightgray;
+    background-color: var(--gray-3);
     max-width: 600px;
     display: grid;
     border-radius: 8px;
@@ -8,7 +8,7 @@
 
 .actionContainer {
     height: 64px;
-    border-top: solid black 1px;
+    border-top: solid var(--gray-9) 1px;
     max-width: 560px;
     width: calc(100vw - 40px);
     justify-self: center;
@@ -27,7 +27,7 @@
 .barBlock {
     width: 1px;
     height: 32px;
-    background-color: black;
+    background-color: var(--gray-9);
 }
 
 .actionList {
@@ -36,6 +36,7 @@
     margin: 0px;
     cursor: pointer;
     padding: 8px 16px;
+
 }
 
 .actionList:hover {
@@ -76,7 +77,7 @@
 .imageContainer {
     height: 64px;
     width: 64px;
-    background-color: gray;
+    background-color: var(--gray-5);
     border-radius: 100%;
     margin: 0px 8px 0px 0px;
 }
@@ -90,13 +91,21 @@
 }
 
 .commentWriteContainer {
-    width: 540px;
+    max-width: 560px;
+    width: calc(100vw - 40px);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    border-top: solid 1px black;
+    border-top: solid 1px var(--gray-9);
+    border-bottom: solid 1px var(--gray-9);
     margin: 0 20px;
     padding: 16px 0;
+}
+
+.commentsContainer {
+    max-height: 346px;
+    overflow-y: auto;
+    margin: -1px 20px 0 20px;
 }
 
 .commentInput {
@@ -105,9 +114,9 @@
     border: none;
     color: var(--gray-9);
     padding: 0 0 0 16px;
-    width: calc(100% - 60px);
+    width: calc(100% - 150px);
     max-width: 344px;
-    height: 64px;
+    height: 48px;
     border-radius: 16px;
 }
 
@@ -116,18 +125,17 @@
 }
 
 .commentContainer {
-    border-top: solid 1px black;
-    margin: 0 20px;
-    padding: 16px 0;
+    border-top: solid 1px var(--gray-9);
+    margin: 0;
+    padding: 16px 16px;
 }
-
 
 .imageContainerComment {
     height: 48px;
     width: 48px;
-    background-color: gray;
+    background-color: var(--gray-5);
     border-radius: 100%;
-    margin: 0px 8px 0px 0px;
+    margin: 0px 8px 0px 8px;
 }
 
 
@@ -143,4 +151,19 @@
 
 .contentCommentContainer {
     padding: 16px 0 8px 24px;
+}
+
+.moreCommentContainer{
+    max-width: 560px;
+    width: calc(100vw - 40px);
+    margin: 0 20px;
+    border-top: solid 1px var(--gray-9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.moreCommentContainer:hover {
+    text-decoration: underline;
 }
