@@ -1,0 +1,38 @@
+.navbarContainer {
+    width: calc(100% - 32px);
+    height: 64px;
+    background-color: var(--accent-1);
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 16px;
+}
+
+.navbarLogo {
+    height: 48px;
+}
+
+.navbarLink {
+    color: var(--brand-2);
+    text-decoration: none;
+}
+
+.navbarLink:hover {
+    text-decoration: underline;
+}
+
+.navbarLeftContainer {
+    display: flex;
+    width: 120px;
+    height: 64px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbarProfile {
+    height: 48px;
+    width: 48px;
+    background-color: var(--gray-5);
+    border-radius: 100%;
+}
