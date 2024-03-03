@@ -4,10 +4,10 @@ import { useState } from 'react';
 
 export default function Post(props) {
     const [showComments, setShowComments] = useState(false);
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState([{ name: "Owen Bean", title: "Greatest Person", content: "Wow so Cool!"}]);
 
     function displayComment() {
-        if (comments.length == 0 && !showComments) {
+        if (comments.length === 0 && !showComments) {
             fetchComments();
         }
 
@@ -16,7 +16,18 @@ export default function Post(props) {
 
     function fetchComments() {
         // TODO: Fetch 5 comments or all if not enough
-        let fetchedComments = [];
+        let fetchedComments = [
+            {
+                name: "Abby Pitcairn",
+                title: "CS Student",
+                content: "Amazing!"
+            },
+            {
+                name: "Michael Yattaw",
+                title: "CS Student",
+                content: "Hmmmmm....."
+            }
+        ];
 
         const newComments = [...comments, ...fetchedComments];
 
@@ -49,18 +60,22 @@ export default function Post(props) {
                     <li className={styles.actionList}>Share</li>
                 </ul>
             </div>
-            {showComments && <div className={styles.comments}>
+            {showComments && 
+            <div className={styles.comments}>
                 <CommentWrite/>
-                <Comment 
-                    name="Owen Bean"
-                    title="Greatest Person"
-                    content="Wow so Cool!"
-                />
-                <Comment 
-                    name="Abby Pitcairn"
-                    title=""
-                    content="Amazing!"
-                />
+                <div className={styles.commentsContainer}>
+                    {comments.map((comment) => {
+                        return <Comment
+                            name={comment.name}
+                            title={comment.title}
+                            content={comment.content} 
+                        />
+                    })}
+                </div>
+            </div>}
+            {showComments &&
+            <div className={styles.moreCommentContainer}>
+                <p onClick={(e) => fetchComments()}>Show More Comments</p>
             </div>}
         </div>
     )
@@ -84,7 +99,7 @@ function Comment(props) {
 function CommentWrite(props) {
     return(
         <div className={styles.commentWriteContainer}>
-            <div className={styles.imageContainer}></div>
+            <div className={styles.imageContainerComment}></div>
             <input className={styles.commentInput} type="text" onChange={(e) => props.onChange(e.target.value)} />
             <div className={styles.commentPost}>Post</div>
         </div>

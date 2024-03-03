@@ -1,0 +1,30 @@
+.sideSectionHeader {
+    padding: 8px 8px;
+    background-color: var(--accent-1);
+    color: var(--brand-2);
+    cursor: pointer;
+}
+
+.sideSectionItem {
+    border-bottom: var(--accent-1) 1px solid;
+    padding: 8px;
+    color: var(--gray-9);
+    cursor: pointer;
+    text-decoration: none;
+    width: calc(100% - 16px);
+    display: block;
+}
+
+.sideSectionItem:hover {
+    text-decoration: underline;
+}
+
+.sideSectionItemContainerHide {
+    height: 0;
+    overflow: hidden;
+}
+
+.sideSectionItemContainerShow {
+    overflow: hidden;
+    height: auto;
+}

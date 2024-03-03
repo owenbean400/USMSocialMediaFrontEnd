@@ -5,6 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addPost } from '../../redux/actions';
 import Post from "../../components/posts/post";
 import PostTests from '../../components/posts/posts_test.json';
+import SideSection from "../../components/sideMenu/sideSection";
+import styles from "./main.module.css";
+import NavBar from "../../components/nav/navbar";
 
 function Main() {
     const [token, setToken] = useState('');
@@ -53,19 +56,61 @@ function Main() {
 
     return(
         <div>
-            <h1>Token</h1>
-            <p>{token}</p>
-            <h2>Posts</h2>
-            {PostTests.posts.map((post, index) => (
-                <Post
-                    key={index}
-                    name={post.name}
-                    title={post.title}
-                    content={post.content}
-                    likes={post.likes}
-                    comments={post.comments}
-                ></Post>
-            ))}
+            <NavBar />
+            <div className={styles.mainContainer}>
+                <div className={styles.mainContainerInside}>
+                    <div className={styles.sidemenu}>
+                        <div className={styles.sidemenuInside}>
+                            <SideSection 
+                                header="Groups"
+                                items={[
+                                    {
+                                        to: "/",
+                                        title: "USM Esports"
+                                    },
+                                    {
+                                        to: "/",
+                                        title: "USM Track"
+                                    },
+                                ]}
+                            />
+                            <SideSection 
+                                header="Classes"
+                                items={[
+                                    {
+                                        to: "/",
+                                        title: "COS 420 Spring 2024"
+                                    },
+                                    {
+                                        to: "/",
+                                        title: "ITA 120 Spring 2024"
+                                    },
+                                ]}
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.postsContainer}>
+                        <div className={styles.newPostContainer}>
+                            <div className={styles.newPostImage}></div>
+                            <input className={styles.newPostTextFieldInput} type="text" />
+                            <p>Post</p>
+                        </div>
+                        {PostTests.posts.map((post, index) => (
+                            <Post
+                                key={index}
+                                name={post.name}
+                                title={post.title}
+                                content={post.content}
+                                likes={post.likes}
+                                comments={post.comments}
+                            ></Post>
+                        ))}
+                        <div className={styles.morePostContainer}>
+                            <p>More Posts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
