@@ -24,7 +24,7 @@
 
 .navbarLeftContainer {
     display: flex;
-    width: 260px;
+    width: 120px;
     height: 64px;
     align-items: center;
     justify-content: space-between;
