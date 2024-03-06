@@ -31,8 +31,7 @@ function PasswordReset() {
       });
 
       if (response.ok) {
-        let data = await response.json();
-        setdisplayMessage(data);
+        setdisplayMessage('Reset Password Sent');
       } else {
         setErrMessage('Password reset error!');
       }
