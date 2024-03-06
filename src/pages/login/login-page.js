@@ -7,7 +7,6 @@ import ConnectConfig from '../../config/connections.json';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../../redux/actions';
-import { GoogleLogin } from '@leecheuk/react-google-login';
 
 function LoginPage() {
   const [emailaddrInput, setEmailInput] = useState('');
@@ -17,8 +16,6 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.hash.substring(1));
-    const googleToken = queryParams.get('id_token')
     const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
 
     async function getPosts(token_input) {
@@ -47,40 +44,8 @@ function LoginPage() {
         }
     }
 
-    async function googleLoginAPI(token) {
-      const URL = ConnectConfig.api_server.url + "/api/v1/auth/googleauthenticate"
-
-      let googlePost = {
-        token: token
-      }
-
-      try {
-        const response = await fetch(URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(googlePost)
-        });
-
-        if (response.ok) {
-          let data = await response.json();
-          sessionStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
-          navigate('/main');
-        } else {
-          setErrMessage('Google login error!');
-        }
-      } catch (error) {
-        setErrMessage('Google login error!');
-      }
-    }
-
     if (tokenFromStorage) {
       getPosts(tokenFromStorage);
-    }
-
-    if (googleToken) {
-      googleLoginAPI(googleToken);
     }
   }, [dispatch, navigate]);
 
@@ -121,12 +86,6 @@ function LoginPage() {
     }
   }
 
-  function googleSuccess(response) {
-  }
-
-  function googleFailure(response) {
-  }
-
   return (
     <div className="login-page">
       <div className="login-container">
@@ -137,16 +96,6 @@ function LoginPage() {
         <Link className="login-links" to={'/register'}>Register</Link>
         <Link className="login-links" to={'/passwordreset'}>Reset Password</Link>
         <Usmbutton buttonText="Login" onClick={clickOn}/>
-        <GoogleLogin 
-          clientId={ConnectConfig.google.client_id}
-          buttonText="Login with Google"
-          onSuccess={googleSuccess}
-          onFailure={googleFailure}
-          cookiePolicy={'single_host_origin'}
-          className="google-client-button"
-          isSignedIn={true}
-          uxMode="redirect"
-        />
       </div>
     </div>
   );
