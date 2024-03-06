@@ -37,7 +37,7 @@ function RegisterPage() {
 
         if (emailaddrInput.indexOf(".") !== -1) {
             let information = emailaddrInput.split(".");
-            if (information.length == 2) {
+            if (information.length === 2) {
                 firstName = information[0];
                 lastName = information[1];
             }
