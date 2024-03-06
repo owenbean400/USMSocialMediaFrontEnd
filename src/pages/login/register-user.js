@@ -31,8 +31,21 @@ function RegisterPage() {
             setErrMessage("Password and confirm password does not match!");
             return;
         }
+
+        let firstName = "";
+        let lastName = "";
+
+        if (emailaddrInput.indexOf(".") !== -1) {
+            let information = emailaddrInput.split(".");
+            if (information.length == 2) {
+                firstName = information[0];
+                lastName = information[1];
+            }
+        }
         
         let credentials = {
+            firstName: firstName,
+            lastName: lastName,
             email: emailaddrInput + "@maine.edu",
             password: passInput
         }
