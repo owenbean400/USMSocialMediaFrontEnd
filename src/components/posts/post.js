@@ -1,6 +1,7 @@
 import styles from "./posts.module.css";
 import { useState } from 'react';
 import ConnectConfig from '../../config/connections.json';
+import { Link } from 'react-router-dom';
 
 
 export default function Post(props) {
@@ -62,13 +63,13 @@ export default function Post(props) {
     return(
         <div className={styles.container}>
             <div className={styles.contentByContainer}>
-                <div className={styles.contentByPersonContainer}>
+                <Link className={styles.contentByPersonContainer} to={"/user/" + props.id}>
                     <div className={styles.imageContainer}></div>
                     <div>
                         <p className={styles.contentName}>{props.name}</p>
                         <p className={styles.contentTitle}>{props.title}</p>
                     </div>
-                </div>
+                </Link>
                 <div>{props.from}</div>
             </div>
             <div className={styles.contentContainer}>{props.content}</div>
