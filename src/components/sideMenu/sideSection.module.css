@@ -28,3 +28,50 @@
     overflow: hidden;
     height: auto;
 }
+
+.sideSectionProfileSection {
+    border-bottom: var(--accent-1) 1px solid;
+    padding: 8px 16px;
+    color: var(--gray-9);
+    cursor: pointer;
+    text-decoration: none;
+    width: calc(100% - 32px);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+@media (max-width: 960px) {
+    .sideSectionProfileImage {
+        margin-left: 16px;
+    }
+}
+
+@media (min-width: 960px) {
+    .sideSectionProfileImage {
+        margin: auto;
+    }
+}
+
+.sideSectionProfileImage {
+    background-color: var(--gray-7);
+    width: 128px;
+    height: 128px;
+    border-radius: 100%;
+}
+
+.sideSectionProfileInfoContainer {
+    margin-left: 16px;
+}
+
+.sideSectionProfileInfoName {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 8px 0 4px 0;
+}
+
+.sideSectionProfileInfoTagLine {
+    font-weight: 100;
+    font-size: 18px;
+    margin: 0;
+}
