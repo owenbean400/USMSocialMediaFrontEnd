@@ -118,7 +118,7 @@ function Main() {
                             <Post
                                 key={index}
                                 id={post.id}
-                                name={post.postersFirstName + " " + post.postersLastName}
+                                name={post.postUserInfo.firstName + " " + post.postUserInfo.lastName}
                                 title={post.title}
                                 content={post.content}
                                 likes={post.likeCount}
