@@ -117,8 +117,8 @@ function Main() {
                         {posts[0] && posts[0].content.map((post, index) => (
                             <Post
                                 key={index}
-                                id={post.id}
-                                name={post.postersFirstName + " " + post.postersLastName}
+                                id={post.postUserInfo.id}
+                                name={post.postUserInfo.firstName + " " + post.postUserInfo.lastName}
                                 title={post.title}
                                 content={post.content}
                                 likes={post.likeCount}
