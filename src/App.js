@@ -5,6 +5,7 @@ import RegisterPage from './pages/login/register-user';
 import PasswordChange from './pages/login/password-change';
 import PasswordReset from './pages/login/password-reset';
 import Main from './pages/main/main';
+import Profile from './pages/profile/profile';
 import VerifyAwaiting from './pages/login/verification-awaiting';
 import VerificationAcceptance from './pages/login/verification-acceptance';
 import { Provider } from 'react-redux';
@@ -23,6 +24,7 @@ function App() {
           <Route path={'/passwordreset'}  exact element={<PasswordReset/>} />
           <Route path={'/passwordchange/:emailAddr/:resetToken'} element={<PasswordChange/>} />
           <Route path={'/main'}  exact element={<Main/>} />
+          <Route path={'/profile'}  exact element={<Profile/>} />
         </Routes>
       </Router>
     </Provider>
