@@ -1,0 +1,83 @@
+.profileContainer{
+    background-color: var(--gray-5);
+    width: 100vw;
+    height: calc(100vh - 64px);
+    padding-top: 64px;
+}
+
+.profileSection {
+    background-color: var(--gray-3);
+    padding: 32px;
+    margin: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.profileSectionImage {
+    height: 256px;
+    width: 256px;
+    background-color: var(--gray-7);
+    border-radius: 100%;
+}
+
+.profileSectionLeft {
+    width: 320px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileSectionRight {
+    width: 380px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.updateMsgSuccess {
+    color: green;
+}
+
+.updateMsgSuccess {
+    color: green;
+}
+
+.updateMsgFail {
+    color: red;
+}
+
+.updateMsgDefault {
+    color: var(--brand-1);
+}
+
+@media (max-width: 1000px) and (min-width: 820px) {
+    .profileSectionRight {
+        margin-left: 32px;
+    }
+}
+
+@media (max-width: 860px) {
+    .profileSectionRight {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .profileSection {
+        padding: 16px;
+        margin: 0px;
+        height: calc(100vh - 96px);
+    }
+}
+
+@media (min-width: 768px) {
+    .profileSection {
+        padding: 32px;
+        margin: 32px;
+        border-radius: 16px;
+        height: calc(100vh - 188px);
+    }
+}

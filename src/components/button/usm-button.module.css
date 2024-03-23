@@ -6,6 +6,7 @@
     margin: 12px 0;
     display: block;
     cursor: pointer;
+    border-radius: 16px;
 }
 
 .buttonContainer {
@@ -14,11 +15,29 @@
     margin: 0;
 }
 
+.usmMiniButton {
+    background-color: var(--brand-2);
+    border: none;
+    color: black;
+    font-family: var(--font-lato);
+    margin: 12px 0;
+    display: block;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 96px;
+    height: 32px;
+}
+
+.buttonMiniContainer {
+    display: block;
+    width: 128px;
+    margin: 0;
+}
+
 @media (max-width: 768px) {
     .usmButton {
         width: 260px;
         height: 48px;
-        border-radius: 16px;
         font-size: 24px;
     }
 
@@ -31,7 +50,6 @@
     .usmButton {
         width: 320px;
         height: 64px;
-        border-radius: 16px;
         font-size: 32px;
     }
 
