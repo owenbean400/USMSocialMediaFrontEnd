@@ -33,7 +33,6 @@
     border-bottom: var(--accent-1) 1px solid;
     padding: 8px 16px;
     color: var(--gray-9);
-    cursor: pointer;
     text-decoration: none;
     width: calc(100% - 32px);
     display: flex;
