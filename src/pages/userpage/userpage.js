@@ -21,7 +21,7 @@ function UserPage() {
     const getNewPostsCount = useCallback(async (lastDateFetch) => {
         if (!userId) return;
     
-        const URL = ConnectConfig.api_server.url + "/api/v1/post/new/fetch/user/" + userId + "?lastFetchDateTime=" + lastDateFetch;;
+        const URL = ConnectConfig.api_server.url + "/api/v1/post/new/fetch/user/" + userId + "?lastFetchDateTime=" + lastDateFetch;
     
         try {
           const response = await fetch(URL, {
@@ -100,7 +100,7 @@ function UserPage() {
         }
     }
 
-    const getUserPostsCallback = useCallback(async (pageNumber, date) => {
+    const getUserPostsCallback = useCallback(async () => {
         if (!userId) return; 
     
         const URL = ConnectConfig.api_server.url + "/api/v1/post/user/" + userId + "?pageNumber=0&pageSize=10";
@@ -165,7 +165,7 @@ function UserPage() {
                 await getUserProfile(tokenFromStorage, userId);
     
                 if (userPost.length === 0) {
-                    await getUserPostsCallback(0);
+                    await getUserPostsCallback();
                 }
             }
         }
