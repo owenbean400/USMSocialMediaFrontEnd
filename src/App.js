@@ -11,6 +11,7 @@ import VerifyAwaiting from './pages/login/verification-awaiting';
 import VerificationAcceptance from './pages/login/verification-acceptance';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import Discover from './pages/discovery/discover';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path={'/main'}  exact element={<Main/>} />
           <Route path={'/profile'}  exact element={<Profile/>} />
           <Route path={'/user/:userId'}  exact element={<UserPage/>} />
+          <Route path={'/discover'}  exact element={<Discover/>} />
         </Routes>
       </Router>
     </Provider>
