@@ -100,9 +100,25 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    margin: 32px 0;
+    margin: 16px 0;
 }
 
 .morePostContainer:hover {
     background-color: var(--gray-0);
+}
+
+.noMorePostContainer {
+    width: 100vw;
+    max-width: 600px;
+    border-radius: 8px;
+    height: 32px;
+    background-color: var(--gray-5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.postClick {
+    cursor: pointer;
 }
