@@ -16,6 +16,7 @@
 .navbarLink {
     color: var(--brand-2);
     text-decoration: none;
+    margin: 0 8px;
 }
 
 .navbarLink:hover {

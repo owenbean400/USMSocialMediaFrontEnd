@@ -1,0 +1,80 @@
+.discoverContainer {
+    background-color: var(--gray-5);
+    width: 100vw;
+    height: calc(100vh - 64px);
+    padding-top: 64px;
+}
+
+.discoverContainerInside {
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.userSearchBarContainer {
+    background-color: var(--accent-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 500px) {
+    .noResultBar {
+        border-radius: 8px;
+    }
+
+    .userMoreBar {
+        border-radius: 8px;
+    }
+}
+
+@media (max-width: 960px) {
+    .userSearchResultContainer {
+        margin: auto;
+    }
+}
+
+@media (min-width: 960px) {
+    .userSearchBarContainer {
+        width: 400px;
+        position: fixed;
+        top: 96px;
+        left: 16px;
+        border-radius: 16px;
+        padding: 8px 8px 16px 8px;
+    }
+
+    .userSearchResultContainer {
+        width: 400px;
+        margin-left: calc(50vw);
+        padding-top: 16px;
+    }
+
+    .userMoreBar {
+        width: 384px;
+    }
+}
+    
+.noResultBar {
+    background-color: var(--gray-3);
+    padding: 8px;
+    text-align: center;
+    margin: 16px 0;
+}
+
+.userMoreBar {
+    background-color: var(--gray-3);
+    padding: 8px;
+    text-align: center;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.userMoreBar:hover {
+    background-color: var(--gray-0);
+}
+
+.userSearchResultContainer {
+    max-width: 500px;
+}
