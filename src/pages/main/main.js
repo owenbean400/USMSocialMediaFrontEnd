@@ -216,12 +216,14 @@ function Main() {
                         {posts.map((post, index) => (
                             <Post
                                 key={index}
-                                id={post.postUserInfo.id}
+                                userId={post.postUserInfo.id}
+                                postId={post.id}
                                 name={post.postUserInfo.firstName + " " + post.postUserInfo.lastName}
                                 title={post.title}
                                 content={post.content}
                                 likes={post.likeCount}
                                 comments={post.comments || []}
+                                isLiked={post.liked}
                             ></Post>
                         ))}
                         {
