@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 export default function Post(props) {
     const [showComments, setShowComments] = useState(false);
     const [comments, setComments] = useState(props.comments);
+    const [isLiked, setIsLiked] = useState(props.isLiked);
+    const [likes, setLikes] = useState(props.likes);
 
     function displayComment() {
         if (comments.length === 0 && !showComments) {
@@ -25,8 +27,9 @@ export default function Post(props) {
         setComments(newComments);
     }
 
-    async function likePost(post_id) {
-        const URL = ConnectConfig.api_server.url + "/api/v1/post/like";
+    async function likePostAction(post_id) {
+        let currentlyLiked = isLiked;
+        const URL = ConnectConfig.api_server.url + "/api/v1/post/" + ((currentlyLiked) ? "unlike" : "like");
 
         const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
 
@@ -48,6 +51,13 @@ export default function Post(props) {
                 let data = await response.json();
 
                 console.log(data);
+
+
+                if (data.status === 1) {
+                    setLikes(prevLikes => prevLikes + (currentlyLiked ? -1 : 1));
+                }
+
+                setIsLiked(!currentlyLiked);
             } else {
                 console.log("Status not ok");
 
@@ -63,7 +73,7 @@ export default function Post(props) {
     return(
         <div className={styles.container}>
             <div className={styles.contentByContainer}>
-                <Link className={styles.contentByPersonContainer} to={"/user/" + props.id}>
+                <Link className={styles.contentByPersonContainer} to={"/user/" + props.userId}>
                     <div className={styles.imageContainer}></div>
                     <div>
                         <p className={styles.contentName}>{props.name}</p>
@@ -74,12 +84,12 @@ export default function Post(props) {
             </div>
             <div className={styles.contentContainer}>{props.content}</div>
             <div className={styles.actionItemInfoContainer}>
-                <p className={styles.actionItemInfo}>{props.likes} Like{(props.likes) === 1 ? "" : "s"}</p>
+                <p className={styles.actionItemInfo}>{likes} Like{(likes) === 1 ? "" : "s"}</p>
                 <p className={styles.actionItemInfo} onClick={(e) => displayComment()}>{props.comments.length} Comment{(props.comments.length) === 1 ? "" : "s"}</p>
             </div>
             <div className={styles.actionContainer}>
                 <ul className={styles.actionListContainer}>
-                    <li className={styles.actionList} onClick={() => likePost(props.id)}>Like</li>
+                    <li className={styles.actionList} onClick={() => likePostAction(props.postId)}>{(isLiked) ? "Liked" : "Like"}</li>
                     <div className={styles.barBlock}></div>
                     <li className={styles.actionList} onClick={(e) => displayComment()}>Comment</li>
                     <div className={styles.barBlock}></div>
@@ -89,7 +99,7 @@ export default function Post(props) {
             {showComments && 
             <div className={styles.comments}>
                 <CommentWrite
-                    id={props.id}
+                    postId={props.postId}
                     />
                 <div className={styles.commentsContainer}>
                     {comments.map((comment) => {
@@ -134,7 +144,7 @@ function CommentWrite(props) {
 
         try {
             let post = {
-                id: props.id,
+                id: props.postId,
                 content: commentContent
             }
 
