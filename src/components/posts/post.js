@@ -92,7 +92,7 @@ export default function Post(props) {
             <div className={styles.contentContainer}>{props.content}</div>
             <div className={styles.actionItemInfoContainer}>
                 <p className={styles.actionItemInfo}>{likes} Like{(likes) === 1 ? "" : "s"}</p>
-                <p className={styles.actionItemInfo} onClick={(e) => displayComment()}>{props.comments.length} Comment{(props.comments.length) === 1 ? "" : "s"}</p>
+                <p className={styles.actionItemInfoClickable} onClick={(e) => displayComment()}>{props.comments.length} Comment{(props.comments.length) === 1 ? "" : "s"}</p>
             </div>
             <div className={styles.actionContainer}>
                 <ul className={styles.actionListContainer}>
