@@ -1,0 +1,47 @@
+.postPageContainer {
+    background-color: var(--gray-5);
+    width: 100vw;
+    height: calc(100vh - 64px);
+    padding-top: 64px;
+}
+
+.postPageContainerInside {
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.postContainerOutside {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.shareIconContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--gray-3);
+    margin: 16px 0 0 0;
+    padding: 16px 0;
+}
+
+.shareIcon {
+    height: 64px;
+    width: 64px;
+}
+
+@media (max-width: 600px) {
+    .shareIconContainer {
+        width: 100vw;
+    }
+}
+
+@media (min-width: 600px) {
+    .shareIconContainer {
+        width: 600px;
+        border-radius: 8px;
+    }
+}

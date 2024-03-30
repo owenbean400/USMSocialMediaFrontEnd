@@ -2,16 +2,14 @@
     background-color: var(--gray-3);
     max-width: 600px;
     display: grid;
-    border-radius: 8px;
     margin: 16px 0;
 }
 
 .actionContainer {
     height: 64px;
     border-top: solid var(--gray-9) 1px;
-    max-width: 560px;
-    width: calc(100vw - 40px);
     justify-self: center;
+    width: calc(100% - 32px);
 }
 
 .actionListContainer {
@@ -44,8 +42,6 @@
 }
 
 .actionItemInfoContainer {
-    max-width: 560px;
-    width: calc(100vw - 40px);
     display: flex;
     height: 20px;
     justify-content: space-between;
@@ -169,4 +165,26 @@
 
 .moreCommentContainer:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .actionItemInfoContainer {
+        width: calc(100vw - 32px);
+        padding: 0 16px;
+    }
+
+    .container {
+        border-radius: 0px;
+    }
+}
+
+@media (min-width: 600px) {
+    .actionItemInfoContainer {
+        width: 568px;
+        padding: 0 16px;
+    }
+
+    .container {
+        border-radius: 8px;
+    }
 }
