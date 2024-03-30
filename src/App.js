@@ -12,6 +12,7 @@ import VerificationAcceptance from './pages/login/verification-acceptance';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import Discover from './pages/discovery/discover';
+import PostPage from './pages/post/postpage';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path={'/profile'}  exact element={<Profile/>} />
           <Route path={'/user/:userId'}  exact element={<UserPage/>} />
           <Route path={'/discover'}  exact element={<Discover/>} />
+          <Route path={'/post/:postId'} exact element={<PostPage/>} />
         </Routes>
       </Router>
     </Provider>

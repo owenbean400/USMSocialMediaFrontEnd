@@ -1,14 +1,21 @@
 import styles from "./posts.module.css";
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import ConnectConfig from '../../config/connections.json';
 import { Link } from 'react-router-dom';
 
 
 export default function Post(props) {
+    const navigate = useNavigate();
+
     const [showComments, setShowComments] = useState(false);
     const [comments, setComments] = useState(props.comments);
     const [isLiked, setIsLiked] = useState(props.isLiked);
     const [likes, setLikes] = useState(props.likes);
+
+    function shareLink() {
+        navigate("/post/" + props.postId);
+    }
 
     function displayComment() {
         if (comments.length === 0 && !showComments) {
@@ -93,7 +100,7 @@ export default function Post(props) {
                     <div className={styles.barBlock}></div>
                     <li className={styles.actionList} onClick={(e) => displayComment()}>Comment</li>
                     <div className={styles.barBlock}></div>
-                    <li className={styles.actionList}>Share</li>
+                    <li className={styles.actionList} onClick={(e) => shareLink()}>Share</li>
                 </ul>
             </div>
             {showComments && 

@@ -18,10 +18,6 @@ function Main() {
     const [morePosts, setMorePosts] = useState(true);
     const navigate = useNavigate();
 
-    console.log("test");
-    console.log(useSelector(state => state.posts))
-    console.log(posts);
-
     const getNewPostsCounts = useCallback(async (lastDateFetch) => {
         if (lastDateFetch === "") {
             return;
