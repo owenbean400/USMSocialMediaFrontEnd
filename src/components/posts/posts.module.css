@@ -51,7 +51,12 @@
 .actionItemInfo {
     height: 20px;
     margin: 0px;
-    cursor: pointer
+}
+
+.actionItemInfoClickable {
+    height: 20px;
+    margin: 0px;
+    cursor: pointer;
 }
 
 .contentContainer {
