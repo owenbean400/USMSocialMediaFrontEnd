@@ -139,9 +139,11 @@ function Main() {
             navigate('/');
         }
 
-        getBase64Image(tokenFromStorage).then((value) => {
-            setProfilePicture(value);
-        });
+        if (profilePicture === "") {
+            getBase64Image(tokenFromStorage).then((value) => {
+                setProfilePicture(value);
+            });
+        }
 
         async function apiRequests(tokenFromStorage) {
             if (posts.length === 0) {
@@ -157,7 +159,7 @@ function Main() {
 
         return () => clearInterval(interval);
 
-    }, [getFirstPosts, getNewPostsCounts, lastNewPostFetch, navigate, posts.length]);
+    }, [getFirstPosts, getNewPostsCounts, lastNewPostFetch, navigate, posts.length, profilePicture]);
 
     async function createPost() {
         const URL = ConnectConfig.api_server.url + "/api/v1/post/create";

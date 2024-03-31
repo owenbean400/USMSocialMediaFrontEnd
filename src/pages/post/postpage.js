@@ -50,15 +50,17 @@ function PostPage() {
             navigate('/');
         }
 
-        getBase64Image(tokenFromStorage).then((value) => {
-            setProfilePicture(value);
-        });
+        if (profilePicture === "") {
+            getBase64Image(tokenFromStorage).then((value) => {
+                setProfilePicture(value);
+            });
+        }
 
         if (!post.hasOwnProperty("id")) {
             getPost(tokenFromStorage);
         }
 
-    }, [getPost, navigate, post]);
+    }, [getPost, navigate, post, profilePicture]);
 
 
     return(

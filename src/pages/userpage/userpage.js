@@ -162,9 +162,11 @@ function UserPage() {
             navigate('/');
         }
 
-        getBase64Image(tokenFromStorage).then((value) => {
-            setProfilePicture(value);
-        });
+        if (profilePicture === "") {
+            getBase64Image(tokenFromStorage).then((value) => {
+                setProfilePicture(value);
+            });
+        }
 
         async function apiRequests(tokenFromStorage) {
             if (userId && Object.entries(userProfile).length === 0) {
@@ -184,7 +186,7 @@ function UserPage() {
     
         return () => clearInterval(interval);
 
-    }, [getNewPostsCount, getUserPostsCallback, getUserProfile, lastNewPostFetch, navigate, token, userId, userPost.length, userProfile]);
+    }, [getNewPostsCount, getUserPostsCallback, getUserProfile, lastNewPostFetch, navigate, profilePicture, token, userId, userPost.length, userProfile]);
 
     async function followPerson() {
         const URL = ConnectConfig.api_server.url + "/api/v1/user/" + ((userProfile?.following || false) ? "unfollow" : "follow") + "/" + userId;

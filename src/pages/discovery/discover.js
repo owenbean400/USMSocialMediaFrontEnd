@@ -73,10 +73,13 @@ function Discover() {
             navigate('/');
         }
 
-        getBase64Image(tokenFromStorage).then((value) => {
-            setProfilePicture(value);
-        });
-    }, [navigate, token]);
+        if (profilePicture === "") {
+            getBase64Image(tokenFromStorage).then((value) => {
+                setProfilePicture(value);
+            });
+        }
+
+    }, [navigate, profilePicture, token]);
 
     return (
         <div>
