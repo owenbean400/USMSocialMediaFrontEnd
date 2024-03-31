@@ -6,9 +6,11 @@ import Post from "../../components/posts/post";
 import SideSection from "../../components/sideMenu/sideSection";
 import styles from "./main.module.css";
 import NavBar from "../../components/nav/navbar";
+import { getBase64Image } from "../../helper/global";
 
 function Main() {
     const [token, setToken] = useState('');
+    const [profilePicture, setProfilePicture] = useState('');
     const [firstFetchDateTime, setFirstFetchDataTime] = useState("");
     const [lastNewPostFetch, setLastNewPostFetch] = useState("");
     const [newPostsCount, setNewPostsCount] = useState(0);
@@ -102,14 +104,14 @@ function Main() {
         }
     }
 
-    const getFirstPosts = useCallback(async () => {
+    const getFirstPosts = useCallback(async (tokenInput) => {
         const URL = ConnectConfig.api_server.url + "/api/v1/post/recommended?pageNumber=0&pageSize=10";
 
         try {
             const response = await fetch(URL, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${tokenInput}`,
                     'Content-Type': 'application/json',
                 }
             });
@@ -127,23 +129,27 @@ function Main() {
             }
         } catch (error) {
         }
-    }, [navigate, token]);
+    }, [navigate]);
 
     useEffect(() => {
-        const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+        const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
         if (tokenFromStorage) {
             setToken(tokenFromStorage);
         } else {
             navigate('/');
         }
 
-        async function apiRequests() {
+        getBase64Image(tokenFromStorage).then((value) => {
+            setProfilePicture(value);
+        });
+
+        async function apiRequests(tokenFromStorage) {
             if (posts.length === 0) {
-                await getFirstPosts();
+                await getFirstPosts(tokenFromStorage);
             }
         }
 
-        apiRequests();
+        apiRequests(tokenFromStorage);
 
         const interval = setInterval(() => {
             getNewPostsCounts(lastNewPostFetch);
@@ -182,7 +188,8 @@ function Main() {
 
     return(
         <div>
-            <NavBar />
+            <NavBar
+                imageData={profilePicture}/>
             <div className={styles.mainContainer}>
                 <div className={styles.mainContainerInside}>
                     <div className={styles.sidemenu}>
@@ -199,7 +206,7 @@ function Main() {
                     </div>
                     <div className={styles.postsContainer}>
                         <div className={styles.newPostContainer}>
-                            <div className={styles.newPostImage}></div>
+                            <img className={styles.newPostImage} src={"data:image/jpeg;base64," + profilePicture} alt="Profile"></img>
                             <input className={styles.newPostTextFieldInput} type="text" onChange={(e) => setCreatePostContent(e.target.value)} value={createPostContent}/>
                             <p onClick={() => createPost()} className={styles.postClick}>Post</p>
                         </div>
@@ -220,6 +227,7 @@ function Main() {
                                 likes={post.likeCount}
                                 comments={post.comments || []}
                                 isLiked={post.liked}
+                                imageData={post.postUserInfo.base64Image}
                             ></Post>
                         ))}
                         {

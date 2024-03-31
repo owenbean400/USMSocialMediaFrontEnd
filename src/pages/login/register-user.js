@@ -61,7 +61,7 @@ function RegisterPage() {
       
             if (response.ok) {
                 let data = await response.json();
-                sessionStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
+                localStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
                 navigate('/verify/awaiting');
             } else {
                 setErrMessage('Registration error!');

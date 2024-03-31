@@ -5,7 +5,7 @@ function UserCard(props) {
     return(
     <div className={styles.userCardContainerOutside}>
         <Link to={(props.id) ? "/user/" + props.id : "/discover"} className={styles.userCardContainerInside}>
-            <div className={styles.userCardImage}></div>
+            <img className={styles.userCardImage} src={"data:image/jpeg;base64," + props.imageData} alt="Profile"></img>
             <div>
                 <p className={styles.userCardText}>{props.firstName + " " + props.lastName}</p>
             </div>
