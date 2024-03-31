@@ -1,6 +1,6 @@
 {
     "api_server": {
-        "url": "http://localhost:8080",
+        "url": "https://api.mainecollege.tech",
         "session_token_id_name": "token",
         "profile_picture": "profile_picture"
     },
