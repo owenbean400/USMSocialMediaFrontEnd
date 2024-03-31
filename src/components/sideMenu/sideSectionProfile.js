@@ -10,8 +10,8 @@ export default function SideSectionProfile(props) {
             <div onClick={(e) => setShowGroup(!showGroup)} className={styles.sideSectionHeader}>{props.header}</div>
             <div className={(showGroup) ? styles.sideSectionItemContainerShow : styles.sideSectionItemContainerHide}>
                 <div className={styles.sideSectionProfileSection}>
-                    <div className={styles.sideSectionProfileImage}>
-                    </div>
+                    <img className={styles.sideSectionProfileImage} src={"data:image/jpeg;base64," + props.imageData} alt="Profile">
+                    </img>
                     <div className={styles.sideSectionProfileInfoContainer}>
                         <p className={styles.sideSectionProfileInfoName}>{props.name}</p>
                         <p className={styles.sideSectionProfileInfoTagLine}>{props.tagLine}</p>

@@ -5,9 +5,11 @@ import NavBar from "../../components/nav/navbar";
 import styles from "./userpage.module.css";
 import SideSectionProfile from "../../components/sideMenu/sideSectionProfile";
 import Post from "../../components/posts/post";
+import { getBase64Image } from "../../helper/global";
 
 function UserPage() {
     const [dateTime, setDateTime] = useState("");
+    const [profilePicture, setProfilePicture] = useState('');
     const [lastNewPostFetch, setLastNewPostFetch] = useState("");
     const [newPostsCount, setNewPostsCount] = useState(0);
     const { userId } = useParams();
@@ -100,7 +102,7 @@ function UserPage() {
         }
     }
 
-    const getUserPostsCallback = useCallback(async () => {
+    const getUserPostsCallback = useCallback(async (tokenInput) => {
         if (!userId) return; 
     
         const URL = ConnectConfig.api_server.url + "/api/v1/post/user/" + userId + "?pageNumber=0&pageSize=10";
@@ -109,7 +111,7 @@ function UserPage() {
             const response = await fetch(URL, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${tokenInput}`,
                     'Content-Type': 'application/json',
                 }
             });
@@ -125,7 +127,7 @@ function UserPage() {
         } catch (error) {
             // Handle network error
         }
-    }, [userId, token, navigate]);
+    }, [userId, navigate]);
 
     const getUserProfile = useCallback(async (token_input, userId) => {
         const URL = ConnectConfig.api_server.url + "/api/v1/user/info/" + userId;
@@ -151,7 +153,7 @@ function UserPage() {
     }, [navigate]);
 
     useEffect(() => {
-        const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+        const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
         if (tokenFromStorage) {
             if (token !== tokenFromStorage) {
                 setToken(tokenFromStorage);
@@ -160,17 +162,21 @@ function UserPage() {
             navigate('/');
         }
 
-        async function apiRequests() {
+        getBase64Image(tokenFromStorage).then((value) => {
+            setProfilePicture(value);
+        });
+
+        async function apiRequests(tokenFromStorage) {
             if (userId && Object.entries(userProfile).length === 0) {
                 await getUserProfile(tokenFromStorage, userId);
     
                 if (userPost.length === 0) {
-                    await getUserPostsCallback();
+                    await getUserPostsCallback(tokenFromStorage);
                 }
             }
         }
 
-        apiRequests();
+        apiRequests(tokenFromStorage);
         
         const interval = setInterval(() => {
             getNewPostsCount(lastNewPostFetch);
@@ -212,7 +218,8 @@ function UserPage() {
 
     return (
         <div>
-            <NavBar />
+            <NavBar
+                imageData={profilePicture}/>
             <div className={styles.userpageContainer}>
                 <div className={styles.userpageContainerInside}>
                     <div className={styles.sidemenu}>
@@ -225,6 +232,7 @@ function UserPage() {
                                 isOwnProfile={userProfile?.ownProfile || true}
                                 header="Profile"
                                 followPerson={followPerson}
+                                imageData={userProfile?.user?.base64Image}
                                 items={[]}
                             />
                         </div>
@@ -239,12 +247,15 @@ function UserPage() {
                         {userPost.map((post, index) => (
                             <Post
                                 key={index}
-                                id={post.postUserInfo.id}
+                                userId={post.postUserInfo.id}
+                                postId={post.id}
                                 name={post.postUserInfo.firstName + " " + post.postUserInfo.lastName}
                                 title={post.title}
                                 content={post.content}
                                 likes={post.likeCount}
                                 comments={post.comments || []}
+                                isLiked={post.isLiked}
+                                imageData={post.postUserInfo.base64Image}
                             ></Post>
                         ))}
                         {

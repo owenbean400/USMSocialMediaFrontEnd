@@ -20,10 +20,75 @@ function Profile() {
             "bio": ""
         }
     });
+    const [imageFileBase64, setImageFileBase64] = useState("");
     const navigate = useNavigate();
 
+    function startsWithJpehImageData(str) {
+        return str.startsWith("data:image/jpeg;base64,") || str.startsWith("data:image/jpg;base64,");
+    }
+
+    async function onFileChange(event) {
+        if (event.currentTarget.files[0] !== undefined) {
+            let base64 = await getBase64(event.currentTarget.files[0]);
+            if (startsWithJpehImageData(base64)) {
+                let uploadSuccess = await uploadFile(base64.split(",")[1]);
+                if (uploadSuccess) {
+                    setImageFileBase64(base64.split(",")[1]);
+                }
+            } else {
+                setUpdateMsg("File must be jpg or jpeg!");
+            }
+        }
+    }
+
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    async function uploadFile(base64) {
+        console.log(base64);
+
+        if (base64 !== "") {
+            console.log("uploading!");
+            const URL = ConnectConfig.api_server.url + "/api/v1/user/profile_picture";
+
+            let body = {
+                imageBase64: base64
+            };
+
+            try {
+                const response = await fetch (URL, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (response.ok) {
+                    setUpdateMsg("Updated Profile!");
+                    return true;
+                } else {
+                    setUpdateMsg("Error! Could not update profile picture!");
+                }
+            } catch (error) {
+                setUpdateMsg("Error! Could not update profile picture!");
+            }
+        } else {
+            console.log("not uploading!");
+        }
+
+        return false;
+    }
+
     useEffect(() => {
-        const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+        const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
         if (tokenFromStorage) {
             setToken(tokenFromStorage);
         } else {
@@ -49,6 +114,7 @@ function Profile() {
 
                     if (data.hasOwnProperty("user")) {
                         setProfileData({ user: data["user"] });
+                        setImageFileBase64(data["user"]["base64Image"])
                     }
                 } else {
 
@@ -145,11 +211,21 @@ function Profile() {
 
     return (
         <div>
-            <NavBar />
+            <NavBar
+               imageData={imageFileBase64}/>
             <div className={styles.profileContainer}>
                 <div className={styles.profileSection}>
                     <div className={styles.profileSectionLeft}>
-                        <div className={styles.profileSectionImage}></div>
+                        <img className={styles.profileSectionImage} src={"data:image/jpeg;base64," + imageFileBase64} alt="Profile"></img>
+                        <label 
+                            for="file-upload" 
+                            className={styles.fileUploadButton}>
+                                Upload Picture
+                        </label>
+                        <input
+                            id="file-upload"
+                            type="file"
+                            onChange={onFileChange} />
                     </div>
                     <div className={styles.profileSectionRight}>
                         <div>
