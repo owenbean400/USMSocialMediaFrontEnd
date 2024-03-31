@@ -38,7 +38,7 @@ export default function Post(props) {
         let currentlyLiked = isLiked;
         const URL = ConnectConfig.api_server.url + "/api/v1/post/" + ((currentlyLiked) ? "unlike" : "like");
 
-        const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+        const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
 
         try {
             let likePost = {
@@ -81,7 +81,7 @@ export default function Post(props) {
         <div className={styles.container}>
             <div className={styles.contentByContainer}>
                 <Link className={styles.contentByPersonContainer} to={"/user/" + props.userId}>
-                    <div className={styles.imageContainer}></div>
+                    <img className={styles.imageContainer} src={"data:image/jpeg;base64," + props.imageData} alt="Profile"></img>
                     <div>
                         <p className={styles.contentName}>{props.name}</p>
                         <p className={styles.contentTitle}>{props.title}</p>
@@ -147,7 +147,7 @@ function CommentWrite(props) {
     async function postComment() {
         const URL = ConnectConfig.api_server.url + "/api/v1/post/comment";
 
-        const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+        const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
 
         try {
             let post = {

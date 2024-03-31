@@ -5,9 +5,10 @@ import ConnectConfig from '../../config/connections.json';
 import TextField from '../../components/inputs/usm-text-field';
 import UserCard from "../../components/search/userCard";
 import styles from "./discover.module.css";
+import { getBase64Image } from "../../helper/global";
 
 function Discover() {
-
+    const [profilePicture, setProfilePicture] = useState('');
     const [userSearchQuery, setUserSearchQuery] = useState("")
     const [users, setUsers] = useState([]);
     const [pageFetch, setPageFetch] = useState(0);
@@ -63,7 +64,7 @@ function Discover() {
     }
 
     useEffect(() => {
-        const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+        const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
         if (tokenFromStorage) {
             if (token !== tokenFromStorage) {
                 setToken(tokenFromStorage);
@@ -71,11 +72,16 @@ function Discover() {
         } else {
             navigate('/');
         }
+
+        getBase64Image(tokenFromStorage).then((value) => {
+            setProfilePicture(value);
+        });
     }, [navigate, token]);
 
     return (
         <div>
-            <NavBar />
+            <NavBar
+                imageData={profilePicture}/>
             <div className={styles.discoverContainer}>
                 <div className={styles.discoverContainerInside}>
                     <div className={styles.userSearchBarContainer}>
@@ -96,6 +102,7 @@ function Discover() {
                                 id={user.id}
                                 firstName={user.firstName}
                                 lastName={user.lastName}
+                                imageData={user.base64Image}
                                 />
                         })}
                         {

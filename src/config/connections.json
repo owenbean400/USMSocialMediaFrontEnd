@@ -1,7 +1,8 @@
 {
     "api_server": {
-        "url": "https://api.mainecollege.tech",
-        "session_token_id_name": "token"
+        "url": "http://localhost:8080",
+        "session_token_id_name": "token",
+        "profile_picture": "profile_picture"
     },
     "google": {
         "client_id": "253025360694-jsegupeqmgj4ahs2fj6bli2ffd2h5i3t.apps.googleusercontent.com"

@@ -16,7 +16,7 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+    const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
 
     async function getPosts(token_input) {
         const URL = ConnectConfig.api_server.url + "/api/v1/post/recommended";
@@ -37,10 +37,10 @@ function LoginPage() {
 
                 navigate('/main');
             } else {
-              sessionStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
+              localStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
             }
         } catch (error) {
-          sessionStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
+          localStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
         }
     }
 
@@ -76,7 +76,7 @@ function LoginPage() {
 
       if (response.ok) {
         let data = await response.json();
-        sessionStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
+        localStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
         navigate('/main');
       } else {
         setErrMessage('Login error!');

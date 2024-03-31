@@ -8,9 +8,11 @@ import XIcon from "../../images/x.png"
 import FacebookIcon from "../../images/facebook.png"
 import LinkedInIcon from "../../images/linkedin.png"
 import MailIcon from "../../images/mail.png"
+import { getBase64Image } from "../../helper/global";
 
 function PostPage() {
     const { postId } = useParams();
+    const [profilePicture, setProfilePicture] = useState('');
     const navigate = useNavigate();
 
     const [post, setPost] = useState({});
@@ -43,11 +45,14 @@ function PostPage() {
     }, [navigate, postId]);
 
     useEffect(() => {
-
-        const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+        const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
         if (!tokenFromStorage) {
             navigate('/');
         }
+
+        getBase64Image(tokenFromStorage).then((value) => {
+            setProfilePicture(value);
+        });
 
         if (!post.hasOwnProperty("id")) {
             getPost(tokenFromStorage);
@@ -58,7 +63,8 @@ function PostPage() {
 
     return(
         <div>
-            <NavBar />
+            <NavBar
+                imageData={profilePicture} />
             <div className={styles.postPageContainer}>
                 <div className={styles.postPageContainerInside}>
                     <div className={styles.postContainerOutside}>
@@ -113,6 +119,7 @@ function PostPage() {
                             likes={post.likeCount}
                             comments={post.comments}
                             isLiked={post.isLiked}
+                            imageData={post.postUserInfo.base64Image}
                             ></Post> :
                         <div></div>
                     }

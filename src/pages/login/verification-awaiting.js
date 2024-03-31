@@ -36,7 +36,7 @@ function VerifyAwaiting() {
     }, [dispatch, navigate]); 
 
     useEffect(() => {
-        const tokenFromStorage = sessionStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+        const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
         if (tokenFromStorage) {
             setToken(tokenFromStorage);
         } else {
