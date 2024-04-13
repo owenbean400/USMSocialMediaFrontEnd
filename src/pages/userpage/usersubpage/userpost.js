@@ -130,6 +130,7 @@ function UserPost() {
                     <p>No More Posts</p>
                 </div>
             }
+            <div className={styles.spacerPost}></div>
         </div>
     )
 }

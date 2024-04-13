@@ -76,6 +76,7 @@ function UserFollowingsPageSection() {
                     <p>No More Followings</p>
                 </div>
             }
+            <div className={styles.spacerPost}></div>
         </div>
     )
 }

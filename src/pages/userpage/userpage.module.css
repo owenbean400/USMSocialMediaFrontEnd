@@ -121,3 +121,7 @@
     align-items: center;
     margin: 16px 0;
 }
+
+.spacerPost {
+    height: 32px;
+}

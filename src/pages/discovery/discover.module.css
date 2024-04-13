@@ -78,3 +78,7 @@
 .userSearchResultContainer {
     max-width: 500px;
 }
+
+.spacerPost {
+    height: 32px;
+}

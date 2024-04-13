@@ -122,3 +122,7 @@
 .postClick {
     cursor: pointer;
 }
+
+.spacerPost {
+    height: 32px;
+}

@@ -166,6 +166,7 @@ function Main() {
                             <p>No More Posts</p>
                         </div>
                     }
+                    <div className={styles.spacerPost}></div>
                 </div>
             </div>
         </div>

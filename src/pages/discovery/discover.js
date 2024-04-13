@@ -85,6 +85,7 @@ function Discover() {
                             <div className={styles.userMoreBar} onClick={() => searchUsers(userSearchQuery, pageFetch)}>More</div>
                         : <div></div>
                     }
+                    <div className={styles.spacerPost}></div>
                 </div>
             </div>
         </div>

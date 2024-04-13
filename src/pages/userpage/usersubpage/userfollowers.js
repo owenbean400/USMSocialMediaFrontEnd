@@ -73,6 +73,7 @@ function UserFollowersPageSection(props) {
                     <p>No More Followers</p>
                 </div>
             }
+            <div className={styles.spacerPost}></div>
         </div>
     )
 }
