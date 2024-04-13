@@ -4,6 +4,7 @@ import ConnectConfig from '../../config/connections.json';
 import TextField from '../../components/inputs/usm-text-field';
 import UserCard from "../../components/search/userCard";
 import styles from "./discover.module.css";
+import { getApiCall } from "../../helper/global";
 
 function Discover() {
     const [userSearchQuery, setUserSearchQuery] = useState("")
@@ -13,40 +14,23 @@ function Discover() {
     const [showMore, setShowMore] = useState(false);
     const navigate = useNavigate();
 
-    console.log(users);
-
     async function searchUsers(query, pageNumber) {
+        const URL_ADD = "/api/v1/user/search?pageNumber=" + pageNumber + "&pageSize=5&query=" + query;
 
-        const URL = ConnectConfig.api_server.url + "/api/v1/user/search?pageNumber=" + pageNumber + "&pageSize=5&query=" + query;
+        let data = await getApiCall(token, URL_ADD, navigate);
 
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                  'Authorization': `Bearer ${token}`,
-                  'Content-Type': 'application/json',
-                },
-            });
-
-            if (response.ok) {
-                let data = await response.json();
-                console.log(data);
-                if (pageNumber > 0) {
-                    setUsers(prevUsers => [...prevUsers, ...data.users.content]);
-                } else {
-                    setUsers([...data.users.content]);
-                }
-                if (data.users.content.length === 0) {
-                    setShowMore(false);
-                } else {
-                    setShowMore(true);
-                }
-                setPageFetch(prevPageFetch => prevPageFetch + 1);
-            } else if (response.status === 401) {
-                navigate('/');
+        if (data !== undefined) {
+            if (pageNumber > 0) {
+                setUsers(prevUsers => [...prevUsers, ...data.users.content]);
+            } else {
+                setUsers([...data.users.content]);
             }
-        } catch (error) {
-
+            if (data.users.content.length === 0) {
+                setShowMore(false);
+            } else {
+                setShowMore(true);
+            }
+            setPageFetch(prevPageFetch => prevPageFetch + 1);
         }
     }
 

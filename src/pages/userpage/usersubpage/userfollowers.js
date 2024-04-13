@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styles from "../userpage.module.css";
-import ConnectConfig from '../../../config/connections.json';
 import UserCard from '../../../components/search/userCard';
+import { getApiCall } from "../../../helper/global";
 
 function UserFollowersPageSection(props) {
     const [userId, token] = useOutletContext();
@@ -20,59 +20,29 @@ function UserFollowersPageSection(props) {
             setPageFollowersFetch(0);
         }
 
-        const URL = ConnectConfig.api_server.url + "/api/v1/user/followers/" + userId + "?pageNumber=" + pageFollowersFetch + "&pageSize=10";
+        const URL_ADD = "/api/v1/user/followers/" + userId + "?pageNumber=" + pageFollowersFetch + "&pageSize=10";
+        let data = await getApiCall(token, URL_ADD, navigate);
 
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
+        if (data !== undefined) {
+            if (data?.userFollowList?.content) {
+                if (data.userFollowList.content.length > 0) {
+                    setUserFollowers(prevUsers => [...prevUsers, ...data.userFollowList.content]);
+                    setPageFollowersFetch(prevPage => prevPage + 1);
+                } else {
+                    setMoreFollowers(false);
                 }
-            });
-
-            if (response.ok) {
-                let data = await response.json();
-                console.log("CONTENT");
-                console.log(data);
-                if (data?.userFollowList?.content) {
-                    if (data.userFollowList.content.length > 0) {
-                        setUserFollowers(prevUsers => [...prevUsers, ...data.userFollowList.content]);
-                        setPageFollowersFetch(prevPage => prevPage + 1);
-                    } else {
-                        setMoreFollowers(false);
-                    }
-                }
-            } else if (response.status === 401) {
-                navigate("/");
             }
-        } catch (error) {
-
         }
     }
 
     const getUserFollowersCallback = useCallback(async (tokenInput) => {
         if (!userId) return;
 
-        const URL = ConnectConfig.api_server.url + "/api/v1/user/followers/" + userId + "?pageNumber=0&pageSize=10";
+        const URL_ADD = "/api/v1/user/followers/" + userId + "?pageNumber=0&pageSize=10";
+        let data = await getApiCall(tokenInput, URL_ADD, navigate);
 
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${tokenInput}`,
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            if (response.ok) {
-                let data = await response.json();
-                setUserFollowers(data.userFollowList.content);
-            } else if (response.status === 401) {
-                navigate("/");
-            }
-        } catch (error) {
-            // Handle error network
+        if (data !== undefined) {
+            setUserFollowers(data.userFollowList.content);
         }
     }, [navigate, userId]);
 

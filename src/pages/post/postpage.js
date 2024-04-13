@@ -7,6 +7,7 @@ import XIcon from "../../images/x.png"
 import FacebookIcon from "../../images/facebook.png"
 import LinkedInIcon from "../../images/linkedin.png"
 import MailIcon from "../../images/mail.png"
+import { getApiCall } from "../../helper/global";
 
 function PostPage() {
     const { postId } = useParams();
@@ -17,27 +18,12 @@ function PostPage() {
     const getPost = useCallback(async (token_input) => {
         if (!postId) return;
 
-        const URL = ConnectConfig.api_server.url + "/api/v1/post/session/" + postId;
+        const URL_ADD = "/api/v1/post/session/" + postId;
 
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token_input}`,
-                    'Content-Type': 'application/json',
-                }
-            });
+        let data = await getApiCall(token_input, URL_ADD, navigate);
 
-            if (response.ok) {
-                let data = await response.json();
-                console.log("Body:")
-                console.log(data.body);
-                setPost(data.body);
-            } else if (response.status === 401) {
-                navigate('/');
-            }
-        } catch (error) {
-            console.log("ERROR!");
+        if (data !== undefined) {
+            setPost(data.body);
         }
     }, [navigate, postId]);
 

@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styles from "../userpage.module.css";
-import ConnectConfig from '../../../config/connections.json';
 import UserCard from '../../../components/search/userCard';
+import { getApiCall } from "../../../helper/global";
 
 function UserFollowingsPageSection() {
     const [userId, token] = useOutletContext();
@@ -20,57 +20,31 @@ function UserFollowingsPageSection() {
             setPageFollowingsFetch(0);
         }
 
-        const URL = ConnectConfig.api_server.url + "/api/v1/user/followings/" + userId + "?pageNumber=" + pageFollowingsFetch + "&pageSize=10";
+        const URL_ADD = "/api/v1/user/followings/" + userId + "?pageNumber=" + pageFollowingsFetch + "&pageSize=10";
+        let data = await getApiCall(token, URL_ADD, navigate);
 
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
+        if (data !== undefined) {
+            if (data?.body?.userFollowList?.content) {
+                if (data.body.userFollowList.content.length > 0) {
+                    setUserFollowings(prevUsers => [...prevUsers, ...data.userFollowList.content]);
+                    setPageFollowingsFetch(prevPage => prevPage + 1);
+                } else {
+                    setMoreFollowings(false);
                 }
-            });
-
-            if (response.ok) {
-                let data = await response.json();
-                if (data?.body?.userFollowList?.content) {
-                    if (data.body.userFollowList.content.length > 0) {
-                        setUserFollowings(prevUsers => [...prevUsers, ...data.userFollowList.content]);
-                        setPageFollowingsFetch(prevPage => prevPage + 1);
-                    } else {
-                        setMoreFollowings(false);
-                    }
-                }
-            } else if (response.status === 401) {
-                navigate("/");
             }
-        } catch (error) {
-
         }
     }
 
     const getUserFollowingsCallback = useCallback(async () => {
         if (!userId) return;
 
-        const URL = ConnectConfig.api_server.url + "/api/v1/user/followings/" + userId + "?pageNumber=0&pageSize=10";
+        const URL_ADD = "/api/v1/user/followings/" + userId + "?pageNumber=0&pageSize=10";
+        let data = await getApiCall(token, URL_ADD, navigate);
 
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            if (response.ok) {
-                let data = await response.json();
-                setUserFollowings(data.userFollowList.content);
-            } else if (response.status === 401) {
-                navigate("/");
-            }
-        } catch (error) {
-            // Handle error network
+        if (data !== undefined) {
+            console.log(data);
+            setUserFollowings(data.userFollowList.content);
+            console.log("AFTER");
         }
     }, [navigate, token, userId]);
 

@@ -3,6 +3,7 @@ import ConnectConfig from '../../config/connections.json';
 import { useNavigate, useParams, Outlet } from "react-router-dom";
 import styles from "./userpage.module.css";
 import SideSectionProfile from "../../components/sideMenu/sideSectionProfile";
+import { getApiCall } from "../../helper/global";
 
 function UserPage() {
     const { userId } = useParams();
@@ -18,92 +19,46 @@ function UserPage() {
     const getUserPostCountCallback = useCallback(async (tokenInput, userId) => {
         if (!userId) return;
 
-        const URL = ConnectConfig.api_server.url + "/api/v1/post/count/user/" + userId;
+        const URL_ADD = "/api/v1/post/count/user/" + userId;
 
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${tokenInput}`,
-                    'Content-Type': 'application/json',
-                }
-            });
+        let data = await getApiCall(tokenInput, URL_ADD, navigate);
 
-            if (response.ok) {
-                let data = await response.json();
-                setPostCount(data?.body?.count);
-            }
-        } catch (error) {
-
+        if (data !== undefined) {
+            setPostCount(data?.body?.count);
         }
-    }, []);
+    }, [navigate]);
 
     const getUserFollowingsCountCallback = useCallback(async (tokenInput, userId) => {
         if (!userId) return;
 
-        const URL = ConnectConfig.api_server.url + "/api/v1/user/count/followings/" + userId;
+        const URL_ADD = "/api/v1/user/count/followings/" + userId;
 
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${tokenInput}`,
-                    'Content-Type': 'application/json',
-                }
-            });
+        let data = await getApiCall(tokenInput, URL_ADD, navigate);
 
-            if (response.ok) {
-                let data = await response.json();
-                setFollowingsCount(data?.followingCount);
-            }
-        } catch (error) {
-
+        if (data !== undefined) {
+            setFollowingsCount(data?.followingCount);
         }
-    }, []);
+    }, [navigate]);
 
     const getUserFollowersCountCallback = useCallback(async (tokenInput, userId) => {
         if (!userId) return;
 
-        const URL = ConnectConfig.api_server.url + "/api/v1/user/count/followers/" + userId;
+        const URL_ADD = "/api/v1/user/count/followers/" + userId;
 
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${tokenInput}`,
-                    'Content-Type': 'application/json',
-                }
-            });
+        let data = await getApiCall(tokenInput, URL_ADD, navigate);
 
-            if (response.ok) {
-                let data = await response.json();
-                setFollowersCount(data?.followerCount);
-            }
-        } catch (error) {
-
+        if (data !== undefined) {
+            setFollowersCount(data?.followerCount);
         }
-    }, []);
+    }, [navigate]);
 
-    const getUserProfile = useCallback(async (token_input, userId) => {
-        const URL = ConnectConfig.api_server.url + "/api/v1/user/info/" + userId;
+    const getUserProfile = useCallback(async (tokenInput, userId) => {
+        const URL_ADD = "/api/v1/user/info/" + userId;
 
-        try {
-            const response = await fetch(URL, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token_input}`,
-                    'Content-Type': 'application/json'
-                }
-            });
+        let data = await getApiCall(tokenInput, URL_ADD, navigate);
 
-            if (response.ok) {
-                let data = await response.json();
-                setUserProfile(data);
-            } else if (response.status === 401) {
-                navigate('/');
-            }
-        } catch (error) {
-            // Handle network error
+        if (data !== undefined) {
+            setUserProfile(data);
         }
     }, [navigate]);
 

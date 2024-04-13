@@ -3,6 +3,7 @@ import styles from "../userpage.module.css";
 import ConnectConfig from '../../../config/connections.json';
 import { useNavigate, useOutletContext } from "react-router-dom";
 import Post from "../../../components/posts/post";
+import { getApiCall } from "../../../helper/global";
 
 function UserPost() {
     const [userId] = useOutletContext();
@@ -16,49 +17,27 @@ function UserPost() {
     const [morePosts, setMorePosts] = useState(true);
     const navigate = useNavigate();
 
-
     async function getNewPosts(lastDateFetch) {
-        const URL = ConnectConfig.api_server.url + "/api/v1/post/new/user/" + userId + "?lastFetchDateTime=" + lastDateFetch;
+        const URL_ADD = "/api/v1/post/new/user/" + userId + "?lastFetchDateTime=" + lastDateFetch;
 
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                }
-            });
+        let data = await getApiCall(token, URL_ADD, navigate);
 
-            if (response.ok) {
-                let data = await response.json();
-                setLastNewPostFetch(data.body.serverDateTime);
-                setUserPost(prevUserPosts => [...data.body.posts, ...prevUserPosts]);
-                setNewPostsCount(0);
-            }
-        } catch (error) {
-
+        if (data !== undefined) {
+            setLastNewPostFetch(data.body.serverDateTime);
+            setUserPost(prevUserPosts => [...data.body.posts, ...prevUserPosts]);
+            setNewPostsCount(0);
         }
     }
 
     const getNewPostsCount = useCallback(async (lastDateFetch) => {
-        const URL = ConnectConfig.api_server.url + "/api/v1/post/new/fetch/user/" + userId + "?lastFetchDateTime=" + lastDateFetch;
-    
-        try {
-          const response = await fetch(URL, {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          });
-    
-          if (response.ok) {
-            let data = await response.json();
+        const URL_ADD = "/api/v1/post/new/fetch/user/" + userId + "?lastFetchDateTime=" + lastDateFetch;
+
+        let data = await getApiCall(token, URL_ADD, navigate);
+
+        if (data !== undefined) {
             setNewPostsCount(data.body.amountOfNewPost);
-          }
-        } catch (error) {
         }
-    }, [token, userId]);
+    }, [token, userId, navigate]);
 
     async function getUserPosts(pageNumber, date) {
         if (!userId) return; 
@@ -66,61 +45,34 @@ function UserPost() {
         if (userPost.length === 0 || userPost === undefined) {
             setPageUserFetch(0);
         }
-    
-        const URL = ConnectConfig.api_server.url + "/api/v1/post/user/" + userId + "?pageNumber=" + pageNumber + "&datetime=" + date + "&pageSize=10";
-    
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                }
-            });
-    
-            if (response.ok) {
-                let data = await response.json();
-                if (data.body.pageResult.content.length > 0) {
-                    if (userPost === undefined) {
-                        setUserPost([...data.body.pageResult.content]);
-                    } else {
-                        setUserPost(prevUserPosts => [...prevUserPosts, ...data.body.pageResult.content]);
-                    }
-                    setPageUserFetch(prevpageUserFetch => prevpageUserFetch + 1);
-                    setDateTime(data.body.dateTimeFetch);
+
+        const URL_ADD = "/api/v1/post/user/" + userId + "?pageNumber=" + pageNumber + "&datetime=" + date + "&pageSize=10";
+
+        let data = await getApiCall(token, URL_ADD, navigate);
+
+        if (data !== undefined) {
+            if (data.body.pageResult.content.length > 0) {
+                if (userPost === undefined) {
+                    setUserPost([...data.body.pageResult.content]);
                 } else {
-                    setMorePosts(false);
+                    setUserPost(prevUserPosts => [...prevUserPosts, ...data.body.pageResult.content]);
                 }
-            } else if (response.status === 401) {
-                navigate('/');
+                setPageUserFetch(prevpageUserFetch => prevpageUserFetch + 1);
+                setDateTime(data.body.dateTimeFetch);
+            } else {
+                setMorePosts(false);
             }
-        } catch (error) {
-            // Handle network error
         }
     }
 
     const getUserPostsCallback = useCallback(async (tokenInput) => {
-        const URL = ConnectConfig.api_server.url + "/api/v1/post/user/" + userId + "?pageNumber=0&pageSize=10";
+        const URL_ADD = "/api/v1/post/user/" + userId + "?pageNumber=0&pageSize=10";
+        let data = await getApiCall(tokenInput, URL_ADD, navigate);
 
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${tokenInput}`,
-                    'Content-Type': 'application/json',
-                }
-            });
-    
-            if (response.ok) {
-                let data = await response.json();
-                setUserPost(data.body.pageResult.content);
-                setDateTime(data.body.dateTimeFetch);
-                setLastNewPostFetch(data.body.dateTimeFetch);
-            } else if (response.status === 401) {
-                navigate('/');
-            }
-        } catch (error) {
-            // Handle network error
+        if (data !== undefined) {
+            setUserPost(data.body.pageResult.content);
+            setDateTime(data.body.dateTimeFetch);
+            setLastNewPostFetch(data.body.dateTimeFetch);
         }
     }, [navigate, userId]);
 
