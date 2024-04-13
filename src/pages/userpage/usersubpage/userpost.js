@@ -58,7 +58,7 @@ function UserPost() {
           }
         } catch (error) {
         }
-    });
+    }, [token, userId]);
 
     async function getUserPosts(pageNumber, date) {
         if (!userId) return; 
@@ -122,7 +122,7 @@ function UserPost() {
         } catch (error) {
             // Handle network error
         }
-    }, [navigate]);
+    }, [navigate, userId]);
 
     useEffect(() => {
         const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
@@ -144,7 +144,7 @@ function UserPost() {
         }, 15000);
 
         return () => clearInterval(interval);
-    }, [token]);
+    }, [token, getNewPostsCount, getUserPostsCallback, lastNewPostFetch, navigate, userPost]);
 
     return (
         <div className={styles.postsContainer}>
