@@ -17,13 +17,18 @@ export default function SideSectionProfile(props) {
                         <p className={styles.sideSectionProfileInfoTagLine}>{props.tagLine}</p>
                         <p>{props.bio}</p>
                         {
-                            (props.isOwnProfile) ?
+                            (!props.isOwnProfile) ?
                             <div></div> :
                             <UsmMiniButton
                                     buttonText={props.isFollowing ? "Unfollow" : "Follow"}
-                                    onClick={props.followPerson}
+                                    onClick={() => props.followPerson()}
                                 />
                         }
+                    </div>
+                    <div>
+                        <div className={styles.userInfoDisplayStat} onClick={() => props.changePage("followers")}>{(props.followersCount === undefined) ?  "" : props.followersCount} Follower{(props.followersCount > 1) ? "s" : ""}</div>
+                        <div className={styles.userInfoDisplayStat} onClick={() => props.changePage("followings")}>{(props.followingsCount === undefined) ?  "" : props.followingsCount} Following{(props.followingsCount > 1) ? "s" : ""}</div>
+                        <div className={styles.userInfoDisplayStat} onClick={() => props.changePage("posts")}>{(props.postsCount === undefined) ? "" : props.postsCount} Posts</div>
                     </div>
                 </div>
             </div>

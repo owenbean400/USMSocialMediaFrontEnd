@@ -12,7 +12,6 @@
     height: 100%;
 }
 
-
 @media (min-width: 960px) {
     .sidemenu {
         max-height: calc(100vh - 160px);
@@ -23,6 +22,12 @@
 
     .postsContainer {
         margin-left: calc(50vw - 184px);
+    }
+
+    .followContainer {
+        margin-left: calc(50vw - 184px);
+        max-width: 600px;
+        width: calc(100vw - 40px);
     }
 }
 
@@ -46,6 +51,10 @@
 
 @media (min-width: 600px) {
     .sidemenu {
+        border-radius: 8px;
+    }
+
+    .moreFollowContainer {
         border-radius: 8px;
     }
 }
@@ -78,6 +87,30 @@
 }
 
 .noMorePostContainer {
+    width: 100vw;
+    max-width: 600px;
+    border-radius: 8px;
+    height: 32px;
+    background-color: var(--gray-5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.moreFollowContainer {
+    width: 100vw;
+    max-width: 600px;
+    height: 32px;
+    background-color: var(--gray-3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 32px 0;
+}
+
+.noMoreFollowContainer {
     width: 100vw;
     max-width: 600px;
     border-radius: 8px;
