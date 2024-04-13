@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import TextFieldPassword from '../../components/inputs/usm-text-field-password';
 import Usmbutton from '../../components/button/usm-button';
@@ -49,6 +49,20 @@ function PasswordChange() {
             setErrMessage('Reset password error!');
           }
     }
+
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+          if (event.key === "Enter") {
+            registerAccount();
+          }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+    
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        };
+    });
 
     return (
         <div className="login-page">

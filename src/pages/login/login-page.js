@@ -1,5 +1,5 @@
 import './login-page.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import TextFieldPassword from '../../components/inputs/usm-text-field-password';
 import TextFieldExtended from '../../components/inputs/usm-text-field-extended';
 import Usmbutton from '../../components/button/usm-button';
@@ -14,53 +14,7 @@ function LoginPage(props) {
   const navigate = useNavigate()
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
-
-    console.log(props.previousUrl);
-
-    async function getPosts(token_input) {
-        const URL = ConnectConfig.api_server.url + "/api/v1/post/recommended";
-
-        try {
-            const response = await fetch(URL, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token_input}`,
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            if (response.ok) {
-                if (props.previousUrl.includes("main")) {
-                  let previousUrl = props.previousUrl;
-                  props.setUrl(() => "");
-                  navigate(previousUrl);
-                } else {
-                  navigate('/main/feed');
-                }
-            } else {
-              localStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
-            }
-        } catch (error) {
-          localStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
-        }
-    }
-
-    if (tokenFromStorage) {
-      getPosts(tokenFromStorage);
-    }
-  }, [dispatch, navigate, props]);
-
-  function handleEmailChange(value) {
-    setEmailInput(value);
-  };
-
-  function handlePassChange(value) {
-    setPassInput(value);
-  };
-
-  async function clickOn() {
+  const checkLoginCredentials = useCallback(async () => {
     const URL = ConnectConfig.api_server.url + "/api/v1/auth/authenticate"
 
     let credentials = {
@@ -94,7 +48,64 @@ function LoginPage(props) {
     } catch (error) {
       setErrMessage('Login error!');
     }
-  }
+  }, [props, emailaddrInput, navigate, passInput]);
+
+  useEffect(() => {
+    const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter") {
+        checkLoginCredentials();
+      }
+    };
+
+    async function getPosts(token_input) {
+        const URL = ConnectConfig.api_server.url + "/api/v1/post/recommended";
+
+        try {
+            const response = await fetch(URL, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token_input}`,
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.ok) {
+                if (props.previousUrl.includes("main")) {
+                  let previousUrl = props.previousUrl;
+                  props.setUrl(() => "");
+                  navigate(previousUrl);
+                } else {
+                  navigate('/main/feed');
+                }
+            } else {
+              localStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
+            }
+        } catch (error) {
+          localStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
+        }
+    }
+
+    if (tokenFromStorage) {
+      getPosts(tokenFromStorage);
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+
+  }, [dispatch, navigate, props, checkLoginCredentials]);
+
+  function handleEmailChange(value) {
+    setEmailInput(value);
+  };
+
+  function handlePassChange(value) {
+    setPassInput(value);
+  };
 
   return (
     <div className="login-page">
@@ -105,7 +116,7 @@ function LoginPage(props) {
         <TextFieldPassword labelText=" Password" onChange={handlePassChange}/>
         <Link className="login-links" to={'/register'}>Register</Link>
         <Link className="login-links" to={'/passwordreset'}>Reset Password</Link>
-        <Usmbutton buttonText="Login" onClick={clickOn}/>
+        <Usmbutton buttonText="Login" onClick={checkLoginCredentials}/>
       </div>
     </div>
   );

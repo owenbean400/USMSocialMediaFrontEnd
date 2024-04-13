@@ -1,5 +1,5 @@
 import './login-page.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextFieldExtended from '../../components/inputs/usm-text-field-extended';
 import Usmbutton from '../../components/button/usm-button';
 import ConnectConfig from '../../config/connections.json';
@@ -14,7 +14,7 @@ function PasswordReset() {
     setEmailInput(value);
   };
 
-  async function clickOn() {
+  async function sendResetPassword() {
     const URL = ConnectConfig.api_server.url + "/api/v1/reset_password"
 
     let credentials = {
@@ -40,6 +40,20 @@ function PasswordReset() {
     }
   }
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter") {
+        sendResetPassword();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+})
+
   return (
     <div className="login-page">
       <div className="login-container">
@@ -48,7 +62,7 @@ function PasswordReset() {
         {(displayMessage === "") ?
         <div>
             <TextFieldExtended labelText="Email Address" labelExtenstion="@maine.edu" onChange={handleEmailChange}/>
-            <Usmbutton buttonText="Send Reset Password" onClick={clickOn}/> 
+            <Usmbutton buttonText="Send Reset Password" onClick={sendResetPassword}/> 
         </div> : <div></div>}
         <Link className="login-links" to={'/'}>Back</Link>
       </div>

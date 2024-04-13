@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextFieldPassword from '../../components/inputs/usm-text-field-password';
 import TextFieldExtended from '../../components/inputs/usm-text-field-extended';
 import Usmbutton from '../../components/button/usm-button';
@@ -23,6 +23,20 @@ function RegisterPage() {
     function handleConfirmPassChange(value) {
         setConfirmPassInput(value);
     };
+
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+          if (event.key === "Enter") {
+            registerAccount();
+          }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        };
+    });
 
     async function registerAccount() {
         const URL = ConnectConfig.api_server.url + "/api/v1/auth/register";
