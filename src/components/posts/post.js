@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import ConnectConfig from '../../config/connections.json';
 import { Link } from 'react-router-dom';
+import { DEFAULT_URL_LOGO } from "../../helper/global";
 
 
 export default function Post(props) {
@@ -81,7 +82,7 @@ export default function Post(props) {
         <div className={styles.container}>
             <div className={styles.contentByContainer}>
                 <Link className={styles.contentByPersonContainer} to={"/main/user/" + props.userId + "/posts"}>
-                    <img className={styles.imageContainer} src={"data:image/jpeg;base64," + props.imageData} alt="Profile"></img>
+                    <img className={styles.imageContainer} src={"data:image/jpeg;base64," + ((props.imageData) ? props.imageData : DEFAULT_URL_LOGO)} alt="Profile"></img>
                     <div>
                         <p className={styles.contentName}>{props.name}</p>
                         <p className={styles.contentTitle}>{props.title}</p>

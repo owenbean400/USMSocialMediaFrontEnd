@@ -1,6 +1,7 @@
 import UsmMiniButton from "../button/usm-mini-button";
 import styles from "./sideSection.module.css";
 import { useState } from "react";
+import { DEFAULT_URL_LOGO } from "../../helper/global";
 
 export default function SideSectionProfile(props) {
     const [showGroup, setShowGroup] = useState(true);
@@ -10,7 +11,7 @@ export default function SideSectionProfile(props) {
             <div onClick={(e) => setShowGroup(!showGroup)} className={styles.sideSectionHeader}>{props.header}</div>
             <div className={(showGroup) ? styles.sideSectionItemContainerShow : styles.sideSectionItemContainerHide}>
                 <div className={styles.sideSectionProfileSection}>
-                    <img className={styles.sideSectionProfileImage} src={"data:image/jpeg;base64," + props.imageData} alt="Profile">
+                    <img className={styles.sideSectionProfileImage} src={"data:image/jpeg;base64," + ((props.imageData) ? props.imageData : DEFAULT_URL_LOGO)} alt="Profile">
                     </img>
                     <div className={styles.sideSectionProfileInfoContainer}>
                         <p className={styles.sideSectionProfileInfoName}>{props.name}</p>
