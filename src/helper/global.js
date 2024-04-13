@@ -47,6 +47,7 @@ async function getApiCall(token, url, navigateUnauthorized) {
         }
 
         if (response.status === 401) {
+            localStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
             navigateUnauthorized("/");
         }
 
