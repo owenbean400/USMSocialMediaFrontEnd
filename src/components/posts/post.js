@@ -113,7 +113,6 @@ export default function Post(props) {
                     {comments.map((comment) => {
                         return <Comment
                             name={comment.commenterFirstName + " " + comment.commenterLastName}
-                            title="{comment.title}"
                             content={comment.content} 
                         />
                     })}
@@ -134,7 +133,6 @@ function Comment(props) {
                 <div className={styles.imageContainerComment}></div>
                 <div>
                     <p className={styles.contentNameComment}>{props.name}</p>
-                    <p className={styles.contentTitle}>{props.title}</p>
                 </div>
             </div>
             <div className={styles.contentCommentContainer}>{props.content}</div>
