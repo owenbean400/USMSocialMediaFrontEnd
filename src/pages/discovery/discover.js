@@ -1,14 +1,11 @@
-import NavBar from "../../components/nav/navbar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConnectConfig from '../../config/connections.json';
 import TextField from '../../components/inputs/usm-text-field';
 import UserCard from "../../components/search/userCard";
 import styles from "./discover.module.css";
-import { getBase64Image } from "../../helper/global";
 
 function Discover() {
-    const [profilePicture, setProfilePicture] = useState('');
     const [userSearchQuery, setUserSearchQuery] = useState("")
     const [users, setUsers] = useState([]);
     const [pageFetch, setPageFetch] = useState(0);
@@ -73,47 +70,37 @@ function Discover() {
             navigate('/');
         }
 
-        if (profilePicture === "") {
-            getBase64Image(tokenFromStorage).then((value) => {
-                setProfilePicture(value);
-            });
-        }
-
-    }, [navigate, profilePicture, token]);
+    }, [navigate, token]);
 
     return (
-        <div>
-            <NavBar
-                imageData={profilePicture}/>
-            <div className={styles.discoverContainer}>
-                <div className={styles.discoverContainerInside}>
-                    <div className={styles.userSearchBarContainer}>
-                        <TextField 
-                            labelText="Search User"
-                            value={userSearchQuery}
-                            onChange={updateSearch}
-                        />
-                    </div>
-                    <div className={styles.userSearchResultContainer}>
-                        {
-                            (users.length === 0) ?
-                            <div className={styles.noResultBar}>No Results</div>
-                            : <div></div>
-                        }
-                        {users.map((user) => {
-                            return <UserCard
-                                id={user.id}
-                                firstName={user.firstName}
-                                lastName={user.lastName}
-                                imageData={user.base64Image}
-                                />
-                        })}
-                        {
-                            (users.length > 0 && showMore) ?
-                              <div className={styles.userMoreBar} onClick={() => searchUsers(userSearchQuery, pageFetch)}>More</div>
-                            : <div></div>
-                        }
-                    </div>
+        <div className={styles.discoverContainer}>
+            <div className={styles.discoverContainerInside}>
+                <div className={styles.userSearchBarContainer}>
+                    <TextField 
+                        labelText="Search User"
+                        value={userSearchQuery}
+                        onChange={updateSearch}
+                    />
+                </div>
+                <div className={styles.userSearchResultContainer}>
+                    {
+                        (users.length === 0) ?
+                        <div className={styles.noResultBar}>No Results</div>
+                        : <div></div>
+                    }
+                    {users.map((user) => {
+                        return <UserCard
+                            id={user.id}
+                            firstName={user.firstName}
+                            lastName={user.lastName}
+                            imageData={user.base64Image}
+                            />
+                    })}
+                    {
+                        (users.length > 0 && showMore) ?
+                            <div className={styles.userMoreBar} onClick={() => searchUsers(userSearchQuery, pageFetch)}>More</div>
+                        : <div></div>
+                    }
                 </div>
             </div>
         </div>

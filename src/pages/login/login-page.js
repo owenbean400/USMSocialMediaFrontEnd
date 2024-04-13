@@ -35,7 +35,7 @@ function LoginPage() {
 
                 dispatch(addPost(data.content));
 
-                navigate('/main');
+                navigate('/main/feed');
             } else {
               localStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
             }
@@ -77,7 +77,7 @@ function LoginPage() {
       if (response.ok) {
         let data = await response.json();
         localStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
-        navigate('/main');
+        navigate('/main/feed');
       } else {
         setErrMessage('Login error!');
       }

@@ -16,6 +16,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import Discover from './pages/discovery/discover';
 import PostPage from './pages/post/postpage';
+import OutsideWindow from './pages/window';
 
 function App() {
 
@@ -29,15 +30,17 @@ function App() {
           <Route path={'/verify/:verificationToken'} element={<VerificationAcceptance/>} />
           <Route path={'/passwordreset'}  exact element={<PasswordReset/>} />
           <Route path={'/passwordchange/:emailAddr/:resetToken'} element={<PasswordChange/>} />
-          <Route path={'/main'}  exact element={<Main/>} />
-          <Route path={'/profile'}  exact element={<Profile/>} />
-          <Route path={'/user/:userId'} element={<UserPage/>}>
-            <Route path='posts' element={<UserPost/>}></Route>
-            <Route path='followers' element={<UserFollowersPageSection/>}></Route>
-            <Route path='followings' element={<UserFollowingsPageSection/>}></Route>
+          <Route path={'/main'} element={<OutsideWindow/>}>
+            <Route path={'feed'} element={<Main/>} />
+            <Route path={'profile'} element={<Profile/>} />
+            <Route path={'user/:userId'} element={<UserPage/>}>
+              <Route path='posts' element={<UserPost/>}></Route>
+              <Route path='followers' element={<UserFollowersPageSection/>}></Route>
+              <Route path='followings' element={<UserFollowingsPageSection/>}></Route>
+            </Route>
+            <Route path={'discover'} element={<Discover/>} />
+            <Route path={'post/:postId'} element={<PostPage/>} />
           </Route>
-          <Route path={'/discover'}  exact element={<Discover/>} />
-          <Route path={'/post/:postId'} exact element={<PostPage/>} />
         </Routes>
       </Router>
     </Provider>

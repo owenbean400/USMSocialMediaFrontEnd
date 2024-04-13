@@ -28,7 +28,7 @@ function VerifyAwaiting() {
     
                 dispatch(addPost(data.content));
     
-                navigate('/main');
+                navigate('/main/feed');
             } else {
             }
         } catch (error) {

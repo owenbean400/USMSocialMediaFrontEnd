@@ -1,13 +1,13 @@
 import ConnectConfig from '../../config/connections.json';
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import NavBar from "../../components/nav/navbar";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import TextField from '../../components/inputs/usm-text-field';
 import TextFieldMulti from '../../components/inputs/usm-text-field-multi';
 import Usmbutton from '../../components/button/usm-button';
 import styles from "./profile.module.css";
 
 function Profile() {
+    const [setProfilePicture] = useOutletContext();
     const [token, setToken] = useState('');
     const [updateMsg, setUpdateMsg] = useState('');
     const [profileData, setProfileData] = useState({
@@ -34,6 +34,7 @@ function Profile() {
                 let uploadSuccess = await uploadFile(base64.split(",")[1]);
                 if (uploadSuccess) {
                     setImageFileBase64(base64.split(",")[1]);
+                    setProfilePicture(() => base64.split(",")[1])
                 }
             } else {
                 setUpdateMsg("File must be jpg or jpeg!");
@@ -114,7 +115,8 @@ function Profile() {
 
                     if (data.hasOwnProperty("user")) {
                         setProfileData({ user: data["user"] });
-                        setImageFileBase64(data["user"]["base64Image"])
+                        setImageFileBase64(data["user"]["base64Image"]);
+                        setProfilePicture(() => data["user"]["base64Image"]);
                     }
                 } else {
 
@@ -124,7 +126,7 @@ function Profile() {
         }
 
         getProfileInformation(tokenFromStorage);
-    }, [navigate]);
+    }, [navigate, setProfilePicture]);
 
     async function updateProfile() {
         const URL = ConnectConfig.api_server.url + "/api/v1/user/profile";
@@ -210,61 +212,56 @@ function Profile() {
     };
 
     return (
-        <div>
-            <NavBar
-               imageData={imageFileBase64}/>
-            <div className={styles.profileContainer}>
-                <div className={styles.profileSection}>
-                    <div className={styles.profileSectionLeft}>
-                        <img className={styles.profileSectionImage} src={"data:image/jpeg;base64," + imageFileBase64} alt="Profile"></img>
-                        <label 
-                            for="file-upload" 
-                            className={styles.fileUploadButton}>
-                                Upload Picture
-                        </label>
-                        <input
-                            id="file-upload"
-                            type="file"
-                            onChange={onFileChange} />
-                    </div>
-                    <div className={styles.profileSectionRight}>
-                        <div>
-                            <TextField
-                                labelText="First Name"
-                                onChange={handleFirstNameChange}
-                                value={profileData["user"]["firstName"]}
-                            />
-                            <TextField
-                                labelText="Last Name"
-                                onChange={handleLastNameChange}
-                                value={profileData["user"]["lastName"]}
-                            />
-                            <TextField
-                                labelText="Tag Line"
-                                onChange={handleTaglineChange}
-                                value={profileData["user"]["tagLine"]}
-                                maxlength={32}
-                            />
-                            <TextFieldMulti
-                                labelText="Bio"
-                                onChange={handleBioChange}
-                                value={profileData["user"]["bio"]}
-                                cols={32}
-                                rows={3}
-                                maxlength={200}
-                            />
-                            <p className={(updateMsg === "Updated!") ? styles.updateMsgSuccess : (updateMsg === "Error! Could not update!") ? styles.updateMsgFail : styles.updateMsgDefault}>{updateMsg}</p>
-                            <Usmbutton
-                                buttonText="Save Changes"
-                                onClick={updateProfile}
-                            />
-                        </div>
+        <div className={styles.profileContainer}>
+            <div className={styles.profileSection}>
+                <div className={styles.profileSectionLeft}>
+                    <img className={styles.profileSectionImage} src={"data:image/jpeg;base64," + imageFileBase64} alt="Profile"></img>
+                    <label 
+                        for="file-upload" 
+                        className={styles.fileUploadButton}>
+                            Upload Picture
+                    </label>
+                    <input
+                        id="file-upload"
+                        type="file"
+                        onChange={onFileChange} />
+                </div>
+                <div className={styles.profileSectionRight}>
+                    <div>
+                        <TextField
+                            labelText="First Name"
+                            onChange={handleFirstNameChange}
+                            value={profileData["user"]["firstName"]}
+                        />
+                        <TextField
+                            labelText="Last Name"
+                            onChange={handleLastNameChange}
+                            value={profileData["user"]["lastName"]}
+                        />
+                        <TextField
+                            labelText="Tag Line"
+                            onChange={handleTaglineChange}
+                            value={profileData["user"]["tagLine"]}
+                            maxlength={32}
+                        />
+                        <TextFieldMulti
+                            labelText="Bio"
+                            onChange={handleBioChange}
+                            value={profileData["user"]["bio"]}
+                            cols={32}
+                            rows={3}
+                            maxlength={200}
+                        />
+                        <p className={(updateMsg === "Updated!") ? styles.updateMsgSuccess : (updateMsg === "Error! Could not update!") ? styles.updateMsgFail : styles.updateMsgDefault}>{updateMsg}</p>
+                        <Usmbutton
+                            buttonText="Save Changes"
+                            onClick={updateProfile}
+                        />
                     </div>
                 </div>
             </div>
         </div>
     )
-
 }
 
 export default Profile

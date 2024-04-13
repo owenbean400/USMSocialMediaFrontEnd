@@ -1,13 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
 import ConnectConfig from '../../config/connections.json';
 import { useNavigate, useParams, Outlet } from "react-router-dom";
-import NavBar from "../../components/nav/navbar";
 import styles from "./userpage.module.css";
 import SideSectionProfile from "../../components/sideMenu/sideSectionProfile";
-import { getBase64Image } from "../../helper/global";
 
 function UserPage() {
-    const [profilePicture, setProfilePicture] = useState('');
     const { userId } = useParams();
     const [userIdState, setUserIdState] = useState(userId);
     const [userIdPrev, setUserIdPrev] = useState(undefined);
@@ -121,12 +118,6 @@ function UserPage() {
             navigate('/');
         }
 
-        if (profilePicture === "") {
-            getBase64Image(tokenFromStorage).then((value) => {
-                setProfilePicture(value);
-            });
-        }
-
         async function fetchUserInformation() {
             getUserProfile(tokenFromStorage, userId);
             getUserFollowersCountCallback(tokenFromStorage, userId);
@@ -145,7 +136,7 @@ function UserPage() {
             fetchUserInformation();
         }
 
-    }, [token, userId, getUserFollowersCountCallback, getUserFollowingsCountCallback, getUserPostCountCallback, getUserProfile, navigate, profilePicture, userIdPrev, userProfile]);
+    }, [token, userId, getUserFollowersCountCallback, getUserFollowingsCountCallback, getUserPostCountCallback, getUserProfile, navigate, userIdPrev, userProfile]);
 
     async function followPerson() {
         const URL = ConnectConfig.api_server.url + "/api/v1/user/" + ((userProfile?.following || false) ? "unfollow" : "follow") + "/" + userId;
@@ -179,13 +170,13 @@ function UserPage() {
     function sideBarNavigation(navigation) {
         switch (navigation) {
             case "posts":
-                navigate("/user/" + userId + "/posts");
+                navigate("/main/user/" + userId + "/posts");
                 break;
             case "followers":
-                navigate("/user/" + userId + "/followers");
+                navigate("/main/user/" + userId + "/followers");
                 break;
             case "followings":
-                navigate("/user/" + userId + "/followings");
+                navigate("/main/user/" + userId + "/followings");
                 break;
             default:
                 break;
@@ -193,32 +184,28 @@ function UserPage() {
     }
 
     return (
-        <div>
-            <NavBar
-                imageData={profilePicture}/>
-            <div className={styles.userpageContainer}>
-                <div className={styles.userpageContainerInside}>
-                    <div className={styles.sidemenu}>
-                        <div className={styles.sidemenuInside}>
-                            <SideSectionProfile
-                                name={((userProfile["user"]?.firstName) ? userProfile["user"]["firstName"] : "") + " " + ((userProfile["user"]?.lastName) ? userProfile["user"]["lastName"] : "")}
-                                tagLine={userProfile["user"]?.tagLine || ""}
-                                bio={userProfile["user"]?.bio || ""}
-                                isFollowing={userProfile?.following || false}
-                                isOwnProfile={userProfile?.ownProfile || true}
-                                header="Profile"
-                                followPerson={() => followPerson()}
-                                imageData={userProfile?.user?.base64Image}
-                                items={[]}
-                                changePage={(navigation) => sideBarNavigation(navigation)}
-                                followersCount={followersCount}
-                                followingsCount={followingsCount}
-                                postsCount={postCount}
-                            />
-                        </div>
+        <div className={styles.userpageContainer}>
+            <div className={styles.userpageContainerInside}>
+                <div className={styles.sidemenu}>
+                    <div className={styles.sidemenuInside}>
+                        <SideSectionProfile
+                            name={((userProfile["user"]?.firstName) ? userProfile["user"]["firstName"] : "") + " " + ((userProfile["user"]?.lastName) ? userProfile["user"]["lastName"] : "")}
+                            tagLine={userProfile["user"]?.tagLine || ""}
+                            bio={userProfile["user"]?.bio || ""}
+                            isFollowing={userProfile?.following || false}
+                            isOwnProfile={userProfile?.ownProfile || true}
+                            header="Profile"
+                            followPerson={() => followPerson()}
+                            imageData={userProfile?.user?.base64Image}
+                            items={[]}
+                            changePage={(navigation) => sideBarNavigation(navigation)}
+                            followersCount={followersCount}
+                            followingsCount={followingsCount}
+                            postsCount={postCount}
+                        />
                     </div>
-                    <Outlet context={[userIdState, token]} />
                 </div>
+                <Outlet context={[userIdState, token]} />
             </div>
         </div>
     );

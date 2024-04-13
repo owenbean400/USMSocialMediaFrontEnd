@@ -14,7 +14,7 @@ export default function Post(props) {
     const [likes, setLikes] = useState(props.likes);
 
     function shareLink() {
-        navigate("/post/" + props.postId);
+        navigate("/main/post/" + props.postId);
     }
 
     function displayComment() {
@@ -80,7 +80,7 @@ export default function Post(props) {
     return(
         <div className={styles.container}>
             <div className={styles.contentByContainer}>
-                <Link className={styles.contentByPersonContainer} to={"/user/" + props.userId + "/posts"}>
+                <Link className={styles.contentByPersonContainer} to={"/main/user/" + props.userId + "/posts"}>
                     <img className={styles.imageContainer} src={"data:image/jpeg;base64," + props.imageData} alt="Profile"></img>
                     <div>
                         <p className={styles.contentName}>{props.name}</p>

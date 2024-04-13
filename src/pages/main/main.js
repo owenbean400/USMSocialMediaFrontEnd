@@ -1,16 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ConnectConfig from '../../config/connections.json';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Post from "../../components/posts/post";
 import SideSection from "../../components/sideMenu/sideSection";
 import styles from "./main.module.css";
-import NavBar from "../../components/nav/navbar";
-import { getBase64Image } from "../../helper/global";
 
 function Main() {
+    const [profilePicture] = useOutletContext();
     const [token, setToken] = useState('');
-    const [profilePicture, setProfilePicture] = useState('');
     const [firstFetchDateTime, setFirstFetchDataTime] = useState("");
     const [lastNewPostFetch, setLastNewPostFetch] = useState("");
     const [newPostsCount, setNewPostsCount] = useState(0);
@@ -118,12 +116,10 @@ function Main() {
 
             if (response.ok) {
                 let data = await response.json();
-                
+
                 setPosts(data.body.pageResult.content);
                 setFirstFetchDataTime(data.body.dateTimeFetch);
                 setLastNewPostFetch(data.body.dateTimeFetch);
-
-                navigate('/main');
             } else if (response.status === 401) {
                 navigate("/");
             }
@@ -133,16 +129,9 @@ function Main() {
 
     useEffect(() => {
         const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
-        if (tokenFromStorage) {
-            setToken(tokenFromStorage);
-        } else {
-            navigate('/');
-        }
 
-        if (profilePicture === "") {
-            getBase64Image(tokenFromStorage).then((value) => {
-                setProfilePicture(value);
-            });
+        if (!tokenFromStorage) {
+            navigate('/');
         }
 
         async function apiRequests(tokenFromStorage) {
@@ -156,6 +145,8 @@ function Main() {
         const interval = setInterval(() => {
             getNewPostsCounts(lastNewPostFetch);
         }, 15000);
+
+        setToken(tokenFromStorage);
 
         return () => clearInterval(interval);
 
@@ -189,60 +180,56 @@ function Main() {
     }
 
     return(
-        <div>
-            <NavBar
-                imageData={profilePicture}/>
-            <div className={styles.mainContainer}>
-                <div className={styles.mainContainerInside}>
-                    <div className={styles.sidemenu}>
-                        <div className={styles.sidemenuInside}>
-                            <SideSection 
-                                header="Groups"
-                                items={[]}
-                            />
-                            <SideSection 
-                                header="Classes"
-                                items={[]}
-                            />
-                        </div>
+        <div className={styles.mainContainer}>
+            <div className={styles.mainContainerInside}>
+                <div className={styles.sidemenu}>
+                    <div className={styles.sidemenuInside}>
+                        <SideSection 
+                            header="Groups"
+                            items={[]}
+                        />
+                        <SideSection 
+                            header="Classes"
+                            items={[]}
+                        />
                     </div>
-                    <div className={styles.postsContainer}>
-                        <div className={styles.newPostContainer}>
-                            <img className={styles.newPostImage} src={"data:image/jpeg;base64," + profilePicture} alt="Profile"></img>
-                            <input className={styles.newPostTextFieldInput} type="text" onChange={(e) => setCreatePostContent(e.target.value)} value={createPostContent}/>
-                            <p onClick={() => createPost()} className={styles.postClick}>Post</p>
-                        </div>
-                        {
-                            (newPostsCount > 0) ?
-                            <div className={styles.morePostContainer} onClick={() => getNewPosts(lastNewPostFetch)}>
-                                <p>{newPostsCount} New Posts Awaiting</p>
-                            </div> : <div></div>
-                        }
-                        {posts.map((post, index) => (
-                            <Post
-                                key={index}
-                                userId={post.postUserInfo.id}
-                                postId={post.id}
-                                name={post.postUserInfo.firstName + " " + post.postUserInfo.lastName}
-                                title={post.title}
-                                content={post.content}
-                                likes={post.likeCount}
-                                comments={post.comments || []}
-                                isLiked={post.liked}
-                                imageData={post.postUserInfo.base64Image}
-                            ></Post>
-                        ))}
-                        {
-                            (morePosts) ?
-                            <div className={styles.morePostContainer} onClick={() => getPosts(pageFetch, firstFetchDateTime)}>
-                                <p>More Posts</p>
-                            </div>
-                            : 
-                            <div className={styles.noMorePostContainer}>
-                                <p>No More Posts</p>
-                            </div>
-                        }
+                </div>
+                <div className={styles.postsContainer}>
+                    <div className={styles.newPostContainer}>
+                        <img className={styles.newPostImage} src={"data:image/jpeg;base64," + profilePicture} alt="Profile"></img>
+                        <input className={styles.newPostTextFieldInput} type="text" onChange={(e) => setCreatePostContent(e.target.value)} value={createPostContent}/>
+                        <p onClick={() => createPost()} className={styles.postClick}>Post</p>
                     </div>
+                    {
+                        (newPostsCount > 0) ?
+                        <div className={styles.morePostContainer} onClick={() => getNewPosts(lastNewPostFetch)}>
+                            <p>{newPostsCount} New Posts Awaiting</p>
+                        </div> : <div></div>
+                    }
+                    {posts.map((post, index) => (
+                        <Post
+                            key={index}
+                            userId={post.postUserInfo.id}
+                            postId={post.id}
+                            name={post.postUserInfo.firstName + " " + post.postUserInfo.lastName}
+                            title={post.title}
+                            content={post.content}
+                            likes={post.likeCount}
+                            comments={post.comments || []}
+                            isLiked={post.liked}
+                            imageData={post.postUserInfo.base64Image}
+                        ></Post>
+                    ))}
+                    {
+                        (morePosts) ?
+                        <div className={styles.morePostContainer} onClick={() => getPosts(pageFetch, firstFetchDateTime)}>
+                            <p>More Posts</p>
+                        </div>
+                        : 
+                        <div className={styles.noMorePostContainer}>
+                            <p>No More Posts</p>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
