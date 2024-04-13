@@ -9,7 +9,7 @@ import LinkedInIcon from "../../images/linkedin.png"
 import MailIcon from "../../images/mail.png"
 import { getApiCall } from "../../helper/global";
 
-function PostPage() {
+function PostPage(props) {
     const { postId } = useParams();
     const navigate = useNavigate();
 
@@ -20,16 +20,20 @@ function PostPage() {
 
         const URL_ADD = "/api/v1/post/session/" + postId;
 
-        let data = await getApiCall(token_input, URL_ADD, navigate);
+        let data = await getApiCall(token_input, URL_ADD, navigate, props.setUrl);
 
         if (data !== undefined) {
             setPost(data.body);
         }
-    }, [navigate, postId]);
+    }, [navigate, postId, props.setUrl]);
 
     useEffect(() => {
         const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
         if (!tokenFromStorage) {
+            let current_url = window.location.hash;
+            if (current_url.includes("main")) {
+                props.setUrl(() => window.location.hash.replace("#", ""));
+            }
             navigate('/');
         }
 
@@ -37,8 +41,7 @@ function PostPage() {
             getPost(tokenFromStorage);
         }
 
-    }, [getPost, navigate, post]);
-
+    }, [getPost, navigate, post, props]);
 
     return(
         <div className={styles.postPageContainer}>

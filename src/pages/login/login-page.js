@@ -6,9 +6,8 @@ import Usmbutton from '../../components/button/usm-button';
 import ConnectConfig from '../../config/connections.json';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addPost } from '../../redux/actions';
 
-function LoginPage() {
+function LoginPage(props) {
   const [emailaddrInput, setEmailInput] = useState('');
   const [passInput, setPassInput] = useState('');
   const [errMessage, setErrMessage] = useState('');
@@ -17,6 +16,8 @@ function LoginPage() {
 
   useEffect(() => {
     const tokenFromStorage = localStorage.getItem(ConnectConfig.api_server.session_token_id_name);
+
+    console.log(props.previousUrl);
 
     async function getPosts(token_input) {
         const URL = ConnectConfig.api_server.url + "/api/v1/post/recommended";
@@ -31,11 +32,13 @@ function LoginPage() {
             });
 
             if (response.ok) {
-                let data = await response.json();
-
-                dispatch(addPost(data.content));
-
-                navigate('/main/feed');
+                if (props.previousUrl.includes("main")) {
+                  let previousUrl = props.previousUrl;
+                  props.setUrl(() => "");
+                  navigate(previousUrl);
+                } else {
+                  navigate('/main/feed');
+                }
             } else {
               localStorage.removeItem(ConnectConfig.api_server.session_token_id_name);
             }
@@ -47,7 +50,7 @@ function LoginPage() {
     if (tokenFromStorage) {
       getPosts(tokenFromStorage);
     }
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate, props]);
 
   function handleEmailChange(value) {
     setEmailInput(value);
@@ -77,7 +80,14 @@ function LoginPage() {
       if (response.ok) {
         let data = await response.json();
         localStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
-        navigate('/main/feed');
+        console.log(props.previousUrl);
+        if (props.previousUrl.includes("main")) {
+          let previousUrl = props.previousUrl;
+          props.setUrl(() => "");
+          navigate(previousUrl);
+        } else {
+          navigate('/main/feed');
+        }
       } else {
         setErrMessage('Login error!');
       }
