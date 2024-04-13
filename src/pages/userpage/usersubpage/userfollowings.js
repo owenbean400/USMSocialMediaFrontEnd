@@ -24,8 +24,8 @@ function UserFollowingsPageSection() {
         let data = await getApiCall(token, URL_ADD, navigate);
 
         if (data !== undefined) {
-            if (data?.body?.userFollowList?.content) {
-                if (data.body.userFollowList.content.length > 0) {
+            if (data?.userFollowList?.content) {
+                if (data.userFollowList.content.length > 0) {
                     setUserFollowings(prevUsers => [...prevUsers, ...data.userFollowList.content]);
                     setPageFollowingsFetch(prevPage => prevPage + 1);
                 } else {
