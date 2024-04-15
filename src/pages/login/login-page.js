@@ -34,8 +34,7 @@ function LoginPage(props) {
       if (response.ok) {
         let data = await response.json();
         localStorage.setItem(ConnectConfig.api_server.session_token_id_name, data.token);
-        console.log(props.previousUrl);
-        if (props.previousUrl.includes("main")) {
+        if (props.previousUrl !== undefined && props.previousUrl.includes("main")) {
           let previousUrl = props.previousUrl;
           props.setUrl(() => "");
           navigate(previousUrl);
