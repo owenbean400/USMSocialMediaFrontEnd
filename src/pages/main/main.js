@@ -6,6 +6,7 @@ import Post from "../../components/posts/post";
 import SideSection from "../../components/sideMenu/sideSection";
 import styles from "./main.module.css";
 import { getApiCall, postApiCall } from "../../helper/global";
+import { DEFAULT_URL_LOGO } from "../../helper/global";
 
 function Main() {
     const [profilePicture] = useOutletContext();
@@ -132,7 +133,7 @@ function Main() {
                 </div>
                 <div className={styles.postsContainer}>
                     <div className={styles.newPostContainer}>
-                        <img className={styles.newPostImage} src={"data:image/jpeg;base64," + profilePicture} alt="Profile"></img>
+                        <img className={styles.newPostImage} src={"data:image/jpeg;base64," + ((profilePicture) ? profilePicture : DEFAULT_URL_LOGO)} alt="Profile"></img>
                         <input className={styles.newPostTextFieldInput} type="text" onChange={(e) => setCreatePostContent(e.target.value)} value={createPostContent}/>
                         <p onClick={() => createPost()} className={styles.postClick}>Post</p>
                     </div>
@@ -154,6 +155,7 @@ function Main() {
                             comments={post.comments || []}
                             isLiked={post.liked}
                             imageData={post.postUserInfo.base64Image}
+                            userProfilePic={profilePicture}
                         ></Post>
                     ))}
                     {

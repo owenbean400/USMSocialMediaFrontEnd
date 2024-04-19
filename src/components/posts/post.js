@@ -108,19 +108,18 @@ export default function Post(props) {
             <div className={styles.comments}>
                 <CommentWrite
                     postId={props.postId}
+                    imageData={props.userProfilePic}
+                    showBottomBar={comments !== undefined && comments.length > 0}
                     />
                 <div className={styles.commentsContainer}>
                     {comments.map((comment) => {
                         return <Comment
                             name={comment.commenterFirstName + " " + comment.commenterLastName}
-                            content={comment.content} 
+                            content={comment.content}
+                            imageData={comment.profilePictureBase64}
                         />
                     })}
                 </div>
-            </div>}
-            {showComments &&
-            <div className={styles.moreCommentContainer}>
-                <p onClick={(e) => fetchComments()}>Show More Comments</p>
             </div>}
         </div>
     )
@@ -130,7 +129,7 @@ function Comment(props) {
     return (
         <div className={styles.commentContainer}>
             <div className={styles.contentByPersonContainer}>
-                <div className={styles.imageContainerComment}></div>
+                <img className={styles.imageContainerComment} src={"data:image/jpeg;base64," + ((props.imageData) ? props.imageData : DEFAULT_URL_LOGO)} alt="comment-profile"></img>
                 <div>
                     <p className={styles.contentNameComment}>{props.name}</p>
                 </div>
@@ -182,8 +181,8 @@ function CommentWrite(props) {
     }
 
     return(
-        <div className={styles.commentWriteContainer}>
-            <div className={styles.imageContainerComment}></div>
+        <div className={(props.showBottomBar) ? styles.commentWriteContainerBar : styles.commentWriteContainer}>
+            <img className={styles.imageContainerComment} src={"data:image/jpeg;base64," + ((props.imageData) ? props.imageData : DEFAULT_URL_LOGO)} alt="comment-post-profile"></img>
             <input className={styles.commentInput} type="text" onChange={(e) => setCommentContent(e.target.value)} value={commentContent} />
             <div className={styles.commentPost} onClick={() => postComment()}>Post</div>
         </div>
