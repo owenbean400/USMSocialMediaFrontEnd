@@ -5,6 +5,7 @@ import TextField from '../../components/inputs/usm-text-field';
 import TextFieldMulti from '../../components/inputs/usm-text-field-multi';
 import Usmbutton from '../../components/button/usm-button';
 import styles from "./profile.module.css";
+import { DEFAULT_URL_LOGO } from "../../helper/global";
 
 function Profile() {
     const [setProfilePicture] = useOutletContext();
@@ -215,7 +216,7 @@ function Profile() {
         <div className={styles.profileContainer}>
             <div className={styles.profileSection}>
                 <div className={styles.profileSectionLeft}>
-                    <img className={styles.profileSectionImage} src={"data:image/jpeg;base64," + imageFileBase64} alt="Profile"></img>
+                    <img className={styles.profileSectionImage} src={"data:image/jpeg;base64," + ((imageFileBase64) ? imageFileBase64 : DEFAULT_URL_LOGO)} alt="Profile"></img>
                     <label 
                         for="file-upload" 
                         className={styles.fileUploadButton}>
