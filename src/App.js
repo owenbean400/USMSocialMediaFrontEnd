@@ -16,7 +16,9 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import Discover from './pages/discovery/discover';
 import PostPage from './pages/post/postpage';
+import MessagePage from './pages/messages/messages';
 import OutsideWindow from './pages/window';
+import MessageUserPage from './pages/messages/messageUser';
 
 function App() {
 
@@ -40,6 +42,8 @@ function App() {
             </Route>
             <Route path={'discover'} element={<Discover/>} />
             <Route path={'post/:postId'} element={<PostPage/>} />
+            <Route path={'messages'} element={<MessagePage />} />
+            <Route path={'message/:userId'} element={<MessageUserPage />} />
           </Route>
         </Routes>
       </Router>

@@ -8,6 +8,7 @@ export default function NavBar(props) {
             <div className={styles.navbarLeftContainer}>
                 <Link className={styles.navbarLink} to={"/main/feed"}>Feed</Link>
                 <Link className={styles.navbarLink} to={"/main/discover"}>Users</Link>
+                <Link className={styles.navbarLink} to={"/main/messages"}>Messages</Link>
             </div>
             <Link to={"/main/profile"} className={styles.navbarProfileLink}><img className={styles.navbarProfile} src={"data:image/jpeg;base64," + ((props.imageData) ? props.imageData : DEFAULT_URL_LOGO)} alt="Profile"></img></Link>
         </nav>

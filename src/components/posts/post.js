@@ -58,23 +58,14 @@ export default function Post(props) {
             if (response.ok) {
                 let data = await response.json();
 
-                console.log(data);
-
 
                 if (data.status === 1) {
                     setLikes(prevLikes => prevLikes + (currentlyLiked ? -1 : 1));
                 }
 
                 setIsLiked(!currentlyLiked);
-            } else {
-                console.log("Status not ok");
-
-                let data = await response.json();
-
-                console.log(data);
             }
         } catch (error) {
-            console.log("Error")
         }
     }
 
@@ -163,20 +154,9 @@ function CommentWrite(props) {
             });
 
             if (response.ok) {
-                let data = await response.json();
-
-                console.log(data);
-
                 setCommentContent('');
-            } else {
-                console.log("Status not ok");
-
-                let data = await response.json();
-
-                console.log(data);
             }
         } catch (error) {
-            console.log("Error")
         }
     }
 

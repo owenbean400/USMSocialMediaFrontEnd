@@ -53,10 +53,7 @@ function Profile() {
     }
 
     async function uploadFile(base64) {
-        console.log(base64);
-
         if (base64 !== "") {
-            console.log("uploading!");
             const URL = ConnectConfig.api_server.url + "/api/v1/user/profile_picture";
 
             let body = {
@@ -82,8 +79,6 @@ function Profile() {
             } catch (error) {
                 setUpdateMsg("Error! Could not update profile picture!");
             }
-        } else {
-            console.log("not uploading!");
         }
 
         return false;
@@ -112,8 +107,6 @@ function Profile() {
                 if (response.ok) {
                     let data = await response.json();
 
-                    console.log(data);
-
                     if (data.hasOwnProperty("user")) {
                         setProfileData({ user: data["user"] });
                         setImageFileBase64(data["user"]["base64Image"]);
@@ -131,15 +124,6 @@ function Profile() {
 
     async function updateProfile() {
         const URL = ConnectConfig.api_server.url + "/api/v1/user/profile";
-
-        console.log({
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-            body: profileData["user"]
-        });
 
         try {
             const response = await fetch(URL, {

@@ -86,4 +86,23 @@ async function postApiCall(token, url, navigateUnauthorized, body) {
     return undefined;
 }
 
-export { getBase64Image, getApiCall, postApiCall, DEFAULT_URL_LOGO };
+function formatDate(inputDate) {
+    if (!inputDate) {
+        return "";
+    }
+
+    const date = new Date(inputDate);
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    const formattedDate = `${hours}:${minutes} ${month}/${day}/${year}`;
+
+    return formattedDate;
+}
+
+
+export { getBase64Image, getApiCall, postApiCall, DEFAULT_URL_LOGO, formatDate };

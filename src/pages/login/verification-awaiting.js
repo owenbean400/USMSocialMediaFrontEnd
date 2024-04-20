@@ -24,7 +24,6 @@ function VerifyAwaiting() {
     
             if (response.ok) {
                 let data = await response.json();
-                console.log(data);
     
                 dispatch(addPost(data.content));
     

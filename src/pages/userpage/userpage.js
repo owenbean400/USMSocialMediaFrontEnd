@@ -110,8 +110,10 @@ function UserPage() {
                 if (response.ok) {
                     setUserProfile({
                         following: !userProfile.following,
+                        ownProfile: userProfile.ownProfile,
                         user: userProfile.user
                     });
+                    getUserFollowersCountCallback(token, userId);
                 } else {
 
                 }
@@ -144,11 +146,12 @@ function UserPage() {
                 <div className={styles.sidemenu}>
                     <div className={styles.sidemenuInside}>
                         <SideSectionProfile
+                            userId={userId}
                             name={((userProfile["user"]?.firstName) ? userProfile["user"]["firstName"] : "") + " " + ((userProfile["user"]?.lastName) ? userProfile["user"]["lastName"] : "")}
                             tagLine={userProfile["user"]?.tagLine || ""}
                             bio={userProfile["user"]?.bio || ""}
                             isFollowing={userProfile?.following || false}
-                            isOwnProfile={userProfile?.ownProfile || true}
+                            isOwnProfile={userProfile?.ownProfile}
                             header="Profile"
                             followPerson={() => followPerson()}
                             imageData={userProfile?.user?.base64Image}

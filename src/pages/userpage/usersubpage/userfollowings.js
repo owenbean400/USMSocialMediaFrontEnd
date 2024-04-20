@@ -42,9 +42,7 @@ function UserFollowingsPageSection() {
         let data = await getApiCall(token, URL_ADD, navigate);
 
         if (data !== undefined) {
-            console.log(data);
             setUserFollowings(data.userFollowList.content);
-            console.log("AFTER");
         }
     }, [navigate, token, userId]);
 
