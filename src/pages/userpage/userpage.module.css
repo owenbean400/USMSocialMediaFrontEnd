@@ -18,6 +18,7 @@
         margin: 16px 32px;
         position: fixed;
         width: 200px;
+        overflow-y: auto;
     }
 
     .postsContainer {
@@ -62,11 +63,7 @@
 .sidemenu {
     background-color: var(--gray-3);
     margin-bottom: -1px;
-    overflow: hidden;
-}
-
-.sidemenuInside {
-    margin-bottom: -1px;
+    overflow-x: hidden;
 }
  
 .morePostContainer {

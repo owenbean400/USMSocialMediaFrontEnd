@@ -30,7 +30,6 @@
 }
 
 .sideSectionProfileSection {
-    border-bottom: var(--accent-1) 1px solid;
     padding: 8px 16px;
     color: var(--gray-9);
     text-decoration: none;
